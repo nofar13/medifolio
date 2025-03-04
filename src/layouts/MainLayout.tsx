@@ -29,17 +29,11 @@ export function MainLayout({ children }: MainLayoutProps) {
       />
       <main className={`flex-1 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
         <div className="container py-8 px-6">
-          <Transition
-            show={!isPageTransitioning}
-            enter="transition-opacity duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            {children}
-          </Transition>
+          {isPageTransitioning ? (
+            <div className="opacity-0">{children}</div>
+          ) : (
+            <div className="animate-fadeIn">{children}</div>
+          )}
         </div>
       </main>
     </div>
