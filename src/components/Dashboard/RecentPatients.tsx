@@ -6,15 +6,27 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { patients } from "@/data/mockData";
 import { ChevronLeft, Eye, Search, UserPlus } from "lucide-react";
+import AddPatientForm from "@/components/Patients/AddPatientForm";
+import { Patient } from "@/types";
+import { toast } from "@/hooks/use-toast";
 
 const RecentPatients = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [localPatients, setLocalPatients] = useState(patients);
   
-  const filteredPatients = patients.filter(patient => 
+  const filteredPatients = localPatients.filter(patient => 
     patient.name.includes(searchTerm) || 
     patient.idNumber.includes(searchTerm) ||
     patient.phone.includes(searchTerm)
   );
+
+  const handleAddPatient = (newPatient: Patient) => {
+    setLocalPatients((prevPatients) => [newPatient, ...prevPatients]);
+    toast({
+      title: "מטופל חדש נוסף בהצלחה",
+      description: `מטופל ${newPatient.name} נוסף למערכת`,
+    });
+  };
 
   return (
     <Card className="hover-lift">
@@ -68,14 +80,18 @@ const RecentPatients = () => {
         </div>
       </CardContent>
       <CardFooter className="bg-gray-50 px-6 py-3 flex justify-between">
-        <Button variant="outline" size="sm" className="text-xs">
-          צפה בכל המטופלים
-          <ChevronLeft className="ml-1 h-3 w-3" />
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="text-xs"
+          asChild
+        >
+          <Link to="/patients">
+            צפה בכל המטופלים
+            <ChevronLeft className="ml-1 h-3 w-3" />
+          </Link>
         </Button>
-        <Button size="sm" className="text-xs">
-          <UserPlus className="ml-1 h-3 w-3" />
-          הוסף מטופל חדש
-        </Button>
+        <AddPatientForm onPatientAdded={handleAddPatient} />
       </CardFooter>
     </Card>
   );
