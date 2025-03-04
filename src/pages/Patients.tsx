@@ -10,12 +10,15 @@ import { Button } from "@/components/ui/button";
 import AddPatientForm from "@/components/Patients/AddPatientForm";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
+import PatientHistory from "@/components/Patients/PatientHistory";
 
 const Patients = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isViewHistoryDialogOpen, setIsViewHistoryDialogOpen] = useState(false);
   
   const handlePatientAdded = (newPatient: Patient) => {
     setPatients(prevPatients => [...prevPatients, newPatient]);
@@ -37,6 +40,11 @@ const Patients = () => {
   const openEditDialog = (patient: Patient) => {
     setSelectedPatient(patient);
     setIsEditDialogOpen(true);
+  };
+
+  const openViewHistoryDialog = (patient: Patient) => {
+    setSelectedPatient(patient);
+    setIsViewHistoryDialogOpen(true);
   };
 
   const filteredPatients = patients.filter(patient => 
@@ -89,13 +97,23 @@ const Patients = () => {
                     <tr key={patient.id} className="border-b border-gray-200 hover:bg-gray-50">
                       <td className="py-4 px-4">
                         <div className="flex space-x-2 rtl:space-x-reverse">
-                          <Button variant="ghost" size="sm" onClick={() => console.log('View', patient.id)}>
+                          <Button variant="ghost" size="sm" onClick={() => openViewHistoryDialog(patient)}>
                             <Eye className="h-4 w-4 mr-1" />
                             צפה
                           </Button>
                           <Button variant="ghost" size="sm" onClick={() => openEditDialog(patient)}>
                             <Edit className="h-4 w-4 mr-1" />
                             ערוך
+                          </Button>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="text-primary"
+                            asChild
+                          >
+                            <Link to={`/patients/${patient.id}/treatment`}>
+                              טיפול חדש
+                            </Link>
                           </Button>
                         </div>
                       </td>
@@ -122,6 +140,17 @@ const Patients = () => {
               patient={selectedPatient} 
               onPatientAdded={handlePatientUpdated}
               isEditing={true}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* View Patient History Dialog */}
+      <Dialog open={isViewHistoryDialogOpen} onOpenChange={setIsViewHistoryDialogOpen}>
+        <DialogContent className="sm:max-w-[900px]" dir="rtl">
+          {selectedPatient && (
+            <PatientHistory 
+              patient={selectedPatient}
             />
           )}
         </DialogContent>

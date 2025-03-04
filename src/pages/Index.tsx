@@ -4,7 +4,6 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye } from "lucide-react";
-import DashboardStats from "@/components/Dashboard/DashboardStats";
 import RecentPatients from "@/components/Dashboard/RecentPatients";
 import UpcomingAppointments from "@/components/Dashboard/UpcomingAppointments";
 
@@ -72,8 +71,6 @@ const Index = () => {
             </CardContent>
           </Card>
         </div>
-
-        <DashboardStats />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <RecentPatients />

@@ -26,8 +26,9 @@ const DashboardStats = () => {
         </TabsList>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <TabsContent value="הכנסות" className="mt-0 space-y-6">
+      {/* Horizontal layout for charts */}
+      <TabsContent value="הכנסות" className="mt-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="overflow-hidden hover-lift">
             <CardContent className="p-0">
               <div className="p-6">
@@ -79,9 +80,11 @@ const DashboardStats = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
+      </TabsContent>
 
-        <TabsContent value="מטופלים" className="mt-0 space-y-6">
+      <TabsContent value="מטופלים" className="mt-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="overflow-hidden hover-lift">
             <CardContent className="p-0">
               <div className="p-6">
@@ -141,39 +144,39 @@ const DashboardStats = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
+      </TabsContent>
 
-        <Card className="overflow-hidden md:col-span-2 hover-lift">
-          <CardContent className="p-6">
-            <div className="flex justify-between items-center mb-4">
-              <Button variant="outline">ייצא דו"ח</Button>
-              <h3 className="text-xl font-semibold">סיכום חודשי</h3>
+      <Card className="overflow-hidden mt-6 hover-lift">
+        <CardContent className="p-6">
+          <div className="flex justify-between items-center mb-4">
+            <Button variant="outline">ייצא דו"ח</Button>
+            <h3 className="text-xl font-semibold">סיכום חודשי</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="bg-green-50 p-4 rounded-lg border border-green-100">
+              <p className="text-right text-gray-500 mb-1 text-sm">סה"כ מטופלים</p>
+              <p className="text-right text-3xl font-bold">1,240</p>
+              <p className="text-right text-green-600 text-sm mt-2">+14% מהחודש הקודם</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="bg-green-50 p-4 rounded-lg border border-green-100">
-                <p className="text-right text-gray-500 mb-1 text-sm">סה"כ מטופלים</p>
-                <p className="text-right text-3xl font-bold">1,240</p>
-                <p className="text-right text-green-600 text-sm mt-2">+14% מהחודש הקודם</p>
-              </div>
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                <p className="text-right text-gray-500 mb-1 text-sm">מטופלים חדשים</p>
-                <p className="text-right text-3xl font-bold">356</p>
-                <p className="text-right text-blue-600 text-sm mt-2">+5% מהחודש הקודם</p>
-              </div>
-              <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
-                <p className="text-right text-gray-500 mb-1 text-sm">הכנסה חודשית</p>
-                <p className="text-right text-3xl font-bold">₪125,400</p>
-                <p className="text-right text-purple-600 text-sm mt-2">+9% מהחודש הקודם</p>
-              </div>
-              <div className="bg-orange-50 p-4 rounded-lg border border-orange-100">
-                <p className="text-right text-gray-500 mb-1 text-sm">פגישות שהושלמו</p>
-                <p className="text-right text-3xl font-bold">780</p>
-                <p className="text-right text-orange-600 text-sm mt-2">+12% מהחודש הקודם</p>
-              </div>
+            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <p className="text-right text-gray-500 mb-1 text-sm">מטופלים חדשים</p>
+              <p className="text-right text-3xl font-bold">356</p>
+              <p className="text-right text-blue-600 text-sm mt-2">+5% מהחודש הקודם</p>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
+              <p className="text-right text-gray-500 mb-1 text-sm">הכנסה חודשית</p>
+              <p className="text-right text-3xl font-bold">₪125,400</p>
+              <p className="text-right text-purple-600 text-sm mt-2">+9% מהחודש הקודם</p>
+            </div>
+            <div className="bg-orange-50 p-4 rounded-lg border border-orange-100">
+              <p className="text-right text-gray-500 mb-1 text-sm">פגישות שהושלמו</p>
+              <p className="text-right text-3xl font-bold">780</p>
+              <p className="text-right text-orange-600 text-sm mt-2">+12% מהחודש הקודם</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </Tabs>
   );
 };

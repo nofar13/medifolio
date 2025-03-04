@@ -51,7 +51,8 @@ export function SidebarNav({ isOpen, onToggle }: SidebarNavProps) {
       <div className="py-6">
         <ul className="space-y-2 px-3">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive = location.pathname === item.path || 
+                            (item.path === "/patients" && location.pathname.includes("/patients/"));
             return (
               <li key={item.path}>
                 <Link
