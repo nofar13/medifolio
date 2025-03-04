@@ -29,16 +29,16 @@ const RecentPatients = () => {
   };
 
   return (
-    <Card className="border-0 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
-      <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 pb-3 pt-5 px-6">
-        <CardTitle className="text-lg font-bold text-white flex justify-between items-center">
+    <Card className="border-0 shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+      <CardHeader className="bg-gradient-to-r from-gray-100 to-subtle-blue pb-3 pt-5 px-6">
+        <CardTitle className="text-lg font-bold text-gray-700 flex justify-between items-center">
           <div className="relative w-[250px]">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-blue-200" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
             <Input
               placeholder="חיפוש מטופל..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/30 border-white/40 placeholder-blue-50 text-white font-semibold"
+              className="pl-10 bg-white/70 border-gray-200 placeholder-gray-400 text-gray-700 font-medium"
               dir="rtl"
             />
           </div>
@@ -58,12 +58,12 @@ const RecentPatients = () => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filteredPatients.map((patient) => (
-                <tr key={patient.id} className="hover:bg-blue-50/50 transition-colors">
+                <tr key={patient.id} className="hover:bg-gray-50/80 transition-colors">
                   <td className="py-4 px-4">
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-gray-500 hover:text-blue-600 hover:bg-blue-100/50"
+                      className="text-gray-500 hover:text-subtle-blue hover:bg-gray-100/50"
                       asChild
                     >
                       <Link to={`/patients/${patient.id}`}>
@@ -73,7 +73,7 @@ const RecentPatients = () => {
                   </td>
                   <td className="py-4 px-4 text-right text-gray-600">{patient.phone}</td>
                   <td className="py-4 px-4 text-right text-gray-600">{patient.idNumber}</td>
-                  <td className="py-4 px-4 text-right font-medium text-gray-800">{patient.name}</td>
+                  <td className="py-4 px-4 text-right font-medium text-gray-700">{patient.name}</td>
                 </tr>
               ))}
             </tbody>
