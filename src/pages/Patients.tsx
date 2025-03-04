@@ -1,6 +1,6 @@
 
 import { MainLayout } from "@/layouts/MainLayout";
-import { patients } from "@/data/mockData";
+import { patients, medicalHistories } from "@/data/mockData";
 import { PatientsList } from "@/components/Patients/PatientsList";
 import { PageAnimation } from "@/components/UI/PageAnimation";
 
