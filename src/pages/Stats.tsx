@@ -82,7 +82,6 @@ const Stats = () => {
           <TabsList className="mb-6">
             <TabsTrigger value="overview">סקירה כללית</TabsTrigger>
             <TabsTrigger value="patients">מטופלים</TabsTrigger>
-            <TabsTrigger value="doctors">רופאים</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -125,10 +124,10 @@ const Stats = () => {
                 <CardHeader>
                   <div className="flex items-center space-x-2 rtl:space-x-reverse">
                     <Users className="h-5 w-5 text-muted-foreground" />
-                    <CardTitle>מטופלים לפי רופא</CardTitle>
+                    <CardTitle>מטופלים לפי רופאה</CardTitle>
                   </div>
                   <CardDescription>
-                    כמות המטופלים שכל רופא טיפל בהם
+                    כמות המטופלים שהרופאה טיפלה בהם
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -143,41 +142,7 @@ const Stats = () => {
                     <CardTitle>זמני המתנה ממוצעים</CardTitle>
                   </div>
                   <CardDescription>
-                    זמן המתנה ממוצע לכל רופא (בדקות)
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {renderChart("bar", patientWaitTimeData, "name", "minutes", 300, ["#82ca9d"])}
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="doctors">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <Users className="h-5 w-5 text-muted-foreground" />
-                    <CardTitle>ביצועי רופאים</CardTitle>
-                  </div>
-                  <CardDescription>
-                    כמות המטופלים וזמני המתנה לפי רופא
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {renderChart("bar", patientsByDoctorData, "name", "patients", 300, ["#8884d8"])}
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <BarChart2 className="h-5 w-5 text-muted-foreground" />
-                    <CardTitle>יעילות הטיפול</CardTitle>
-                  </div>
-                  <CardDescription>
-                    זמן טיפול ממוצע לכל רופא (בדקות)
+                    זמן המתנה ממוצע לרופאה (בדקות)
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
