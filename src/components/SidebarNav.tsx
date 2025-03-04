@@ -36,7 +36,7 @@ export function SidebarNav({ isOpen, onToggle }: SidebarNavProps) {
         {isOpen ? (
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Eye className="h-8 w-8 text-primary icon-glow" />
-            <span className="font-semibold text-xl">מדיפוליו</span>
+            <span className="font-semibold text-xl">מרפאת יונינה</span>
           </Link>
         ) : (
           <Link to="/" className="w-full flex justify-center">

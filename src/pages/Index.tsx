@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,7 @@ const Index = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center">
             <Eye className="h-10 w-10 text-primary mr-3 icon-glow" />
-            <h1 className="text-3xl font-bold">מערכת ניהול מרפאת עיניים</h1>
+            <h1 className="text-3xl font-bold">מרפאת יונינה - ניהול מרפאת עיניים</h1>
           </div>
           <div className="flex space-x-2 rtl:space-x-reverse mt-4 md:mt-0">
             <Button variant="outline">ייצוא נתונים</Button>

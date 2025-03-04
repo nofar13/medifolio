@@ -7,7 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const Settings = () => {
-  const [clinicName, setClinicName] = useState("מרפאת עיניים פרטית");
+  const [clinicName, setClinicName] = useState("מרפאת יונינה");
   const [email, setEmail] = useState("contact@eyeclinic.com");
   const [phone, setPhone] = useState("03-1234567");
   const [address, setAddress] = useState("רחוב הרצל 100, תל אביב");
