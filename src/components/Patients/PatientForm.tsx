@@ -15,7 +15,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { PatientFormData } from "@/types";
 
+// Create a Zod schema that matches our PatientFormData type
 const patientFormSchema = z.object({
   idNumber: z.string().min(5, "מספר תעודת זהות חייב להכיל לפחות 5 תווים"),
   name: z.string().min(2, "שם המטופל חייב להכיל לפחות 2 תווים"),
@@ -26,11 +28,11 @@ const patientFormSchema = z.object({
   additionalNotes: z.string().optional(),
 });
 
-type PatientFormValues = z.infer<typeof patientFormSchema>;
+type FormValues = z.infer<typeof patientFormSchema>;
 
 interface PatientFormProps {
-  initialValues?: PatientFormValues;
-  onSubmit: (data: PatientFormValues) => void;
+  initialValues?: Partial<PatientFormData>;
+  onSubmit: (data: PatientFormData) => void;
   submitLabel?: string;
 }
 
@@ -39,22 +41,33 @@ export function PatientForm({
   onSubmit, 
   submitLabel = "שמור" 
 }: PatientFormProps) {
-  const form = useForm<PatientFormValues>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(patientFormSchema),
-    defaultValues: initialValues || {
-      idNumber: "",
-      name: "",
-      phone: "",
-      email: "",
-      age: 0,
-      gender: "זכר",
-      additionalNotes: "",
+    defaultValues: {
+      idNumber: initialValues?.idNumber || "",
+      name: initialValues?.name || "",
+      phone: initialValues?.phone || "",
+      email: initialValues?.email || "",
+      age: initialValues?.age || 0,
+      gender: initialValues?.gender || "זכר",
+      additionalNotes: initialValues?.additionalNotes || "",
     },
   });
 
-  const handleSubmit = (data: PatientFormValues) => {
+  const handleSubmit = (data: FormValues) => {
     try {
-      onSubmit(data);
+      // Convert FormValues to PatientFormData
+      const patientData: PatientFormData = {
+        idNumber: data.idNumber,
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        age: data.age,
+        gender: data.gender,
+        additionalNotes: data.additionalNotes,
+      };
+      
+      onSubmit(patientData);
       toast.success("פרטי המטופל נשמרו בהצלחה");
     } catch (error) {
       toast.error("שגיאה בשמירת פרטי המטופל");
