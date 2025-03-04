@@ -38,7 +38,7 @@ const RecentPatients = () => {
               placeholder="חיפוש מטופל..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/10 border-white/20 placeholder-blue-200 text-white font-medium"
+              className="pl-10 bg-white/20 border-white/30 placeholder-blue-100 text-white font-semibold"
               dir="rtl"
             />
           </div>
