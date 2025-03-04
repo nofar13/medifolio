@@ -2,14 +2,13 @@
 import { useState } from "react";
 import { Patient, MedicalHistory } from "@/types";
 import { Button } from "@/components/ui/button";
-import { UserPlus, Search, Eye, Edit, Trash2 } from "lucide-react";
-import { PatientForm } from "@/components/Patients/PatientForm";
+import { UserPlus } from "lucide-react";
 import { PatientHistory } from "@/components/Patients/PatientHistory";
 import AddPatientForm from "@/components/Patients/AddPatientForm";
 import { toast } from "@/hooks/use-toast";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import { PatientCard } from "./PatientCard";
+import { PatientSearch } from "./PatientSearch";
+import { PatientTabs } from "./PatientTabs";
 
 interface PatientsListProps {
   initialPatients: Patient[];
@@ -80,6 +79,47 @@ export const PatientsList = ({ initialPatients, medicalHistories }: PatientsList
     setIsEditing(true);
   };
 
+  const renderPatientsList = () => {
+    if (filteredPatients.length === 0) {
+      return (
+        <div className="col-span-full text-center py-12">
+          <p className="text-gray-500">לא נמצאו מטופלים</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filteredPatients.map((patient) => (
+          <PatientCard
+            key={patient.id}
+            patient={patient}
+            onView={handleViewPatientHistory}
+            onEdit={handleEditPatient}
+            onDelete={handleDeletePatient}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  const renderPatientHistory = () => {
+    if (!selectedPatient) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-gray-500">בחר מטופל כדי לצפות בהיסטוריה הרפואית</p>
+        </div>
+      );
+    }
+
+    return (
+      <PatientHistory 
+        history={selectedPatient.medicalHistory || []} 
+        patientName={selectedPatient.name}
+      />
+    );
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-8">
@@ -90,100 +130,18 @@ export const PatientsList = ({ initialPatients, medicalHistories }: PatientsList
         </Button>
       </div>
 
-      <div className="mb-6">
-        <div className="relative w-full max-w-md">
-          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-          <Input
-            placeholder="חיפוש לפי שם או מספר זהות..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-3 py-2 w-full"
-          />
-        </div>
-      </div>
+      <PatientSearch 
+        searchTerm={searchTerm} 
+        onSearchChange={setSearchTerm} 
+      />
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="list">רשימת מטופלים</TabsTrigger>
-          <TabsTrigger value="view">
-            {selectedPatient ? `היסטוריה רפואית - ${selectedPatient.name}` : 'צפה בהיסטוריה'}
-          </TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="list">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredPatients.length > 0 ? (
-              filteredPatients.map((patient) => (
-                <Card key={patient.id} className="hover:shadow-md transition-shadow">
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex space-x-2 rtl:space-x-reverse">
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          onClick={() => handleViewPatientHistory(patient)}
-                          className="text-blue-500"
-                        >
-                          <Eye size={18} />
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          onClick={() => handleEditPatient(patient)}
-                          className="text-amber-500"
-                        >
-                          <Edit size={18} />
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          onClick={() => handleDeletePatient(patient.id)}
-                          className="text-red-500"
-                        >
-                          <Trash2 size={18} />
-                        </Button>
-                      </div>
-                      <div className="text-right">
-                        <h3 className="font-semibold text-lg">{patient.name}</h3>
-                        <p className="text-gray-500 text-sm">ת.ז.: {patient.idNumber}</p>
-                      </div>
-                    </div>
-                    <div className="text-right space-y-1">
-                      <p className="text-sm"><span className="font-medium">גיל:</span> {patient.age}</p>
-                      <p className="text-sm"><span className="font-medium">מגדר:</span> {patient.gender}</p>
-                      <p className="text-sm"><span className="font-medium">טלפון:</span> {patient.phone}</p>
-                      <p className="text-sm truncate"><span className="font-medium">דוא"ל:</span> {patient.email}</p>
-                      <p className="text-sm mt-2">
-                        <span className="font-medium">היסטוריה רפואית:</span> {' '}
-                        {patient.medicalHistory && patient.medicalHistory.length > 0
-                          ? `${patient.medicalHistory.length} רשומות`
-                          : 'אין רשומות'}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <p className="text-gray-500">לא נמצאו מטופלים</p>
-              </div>
-            )}
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="view">
-          {selectedPatient ? (
-            <PatientHistory 
-              history={selectedPatient.medicalHistory || []} 
-              patientName={selectedPatient.name}
-            />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500">בחר מטופל כדי לצפות בהיסטוריה הרפואית</p>
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
+      <PatientTabs
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        listContent={renderPatientsList()}
+        historyContent={renderPatientHistory()}
+        selectedPatientName={selectedPatient?.name}
+      />
 
       {isAddingPatient && (
         <AddPatientForm
