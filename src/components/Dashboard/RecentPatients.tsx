@@ -36,7 +36,7 @@ const RecentPatients = () => {
         <div className="overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200">
+              <tr>
                 <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">פעולות</th>
                 <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">טלפון</th>
                 <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">ת.ז.</th>
@@ -45,7 +45,7 @@ const RecentPatients = () => {
             </thead>
             <tbody>
               {filteredPatients.map((patient) => (
-                <tr key={patient.id} className="border-b border-gray-200 hover:bg-gray-50">
+                <tr key={patient.id} className="hover:bg-gray-50">
                   <td className="py-4 px-2">
                     <Button 
                       variant="ghost" 
