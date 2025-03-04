@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { MainLayout } from "@/layouts/MainLayout";
@@ -28,6 +27,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { medicalHistories, patients } from "@/data/mockData";
 import { MedicalHistory, Patient } from "@/types";
+import { FilePlus, Eye } from "lucide-react";
 
 const formSchema = z.object({
   rightVision: z.string().optional(),
@@ -70,7 +70,6 @@ const PatientTreatment = () => {
       }
     }
     
-    // Simulate loading with a subtle animation
     const timer = setTimeout(() => {
       const mainContent = document.querySelector(".main-content");
       if (mainContent) {
@@ -80,6 +79,12 @@ const PatientTreatment = () => {
     
     return () => clearTimeout(timer);
   }, [patientId, navigate]);
+
+  const navigateToCurrentTreatment = () => {
+    if (patientId) {
+      navigate(`/patients/${patientId}/current-treatment`);
+    }
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -115,8 +120,6 @@ const PatientTreatment = () => {
       prescriptionNotes: data.prescriptionNotes || ""
     };
     
-    // In a real app, you would save this to a database
-    // For now we'll just add it to our histories
     setHistories(prev => [newHistory, ...prev]);
     
     toast({
@@ -140,9 +143,19 @@ const PatientTreatment = () => {
       <div className="main-content opacity-0">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">טיפול חדש</h1>
-          <Button variant="outline" onClick={() => navigate("/patients")}>
-            חזרה לרשימת המטופלים
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              onClick={navigateToCurrentTreatment} 
+              className="mr-2"
+              variant="default"
+            >
+              <FilePlus className="ml-2 h-4 w-4" />
+              טיפול נוכחי
+            </Button>
+            <Button variant="outline" onClick={() => navigate("/patients")}>
+              חזרה לרשימת המטופלים
+            </Button>
+          </div>
         </div>
         
         <div className="mb-6">
