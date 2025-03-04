@@ -2,7 +2,6 @@
 import { SidebarNav } from "@/components/SidebarNav";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Transition } from "@/components/ui/transition";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -22,7 +21,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
       <SidebarNav 
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)}

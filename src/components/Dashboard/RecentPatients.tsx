@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { patients } from "@/data/mockData";
 import { ChevronLeft, Eye, Search, UserPlus } from "lucide-react";
@@ -29,40 +29,41 @@ const RecentPatients = () => {
   };
 
   return (
-    <Card className="hover-lift">
-      <CardContent className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <div className="relative">
+    <Card className="border border-gray-200 shadow-formal transition-shadow duration-300 hover:shadow-formal-hover">
+      <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 pb-3 pt-5 px-6 border-b border-gray-100">
+        <CardTitle className="text-lg font-semibold text-gray-800 flex justify-between items-center">
+          <div className="relative w-[250px]">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="חיפוש מטופל..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-[250px]"
+              className="pl-10 bg-white/90 border-gray-200"
               dir="rtl"
             />
           </div>
-          <h3 className="text-xl font-semibold">מטופלים אחרונים</h3>
-        </div>
-
+          <span>מטופלים אחרונים</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
         <div className="overflow-hidden">
           <table className="w-full">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">פעולות</th>
-                <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">טלפון</th>
-                <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">ת.ז.</th>
-                <th className="py-3 px-2 text-right text-sm font-medium text-gray-500">שם מטופל</th>
+                <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">פעולות</th>
+                <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">טלפון</th>
+                <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">ת.ז.</th>
+                <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">שם מטופל</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {filteredPatients.map((patient) => (
-                <tr key={patient.id} className="hover:bg-gray-50">
-                  <td className="py-4 px-2">
+                <tr key={patient.id} className="hover:bg-blue-50/50 transition-colors">
+                  <td className="py-4 px-4">
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-gray-500 hover:text-primary"
+                      className="text-gray-500 hover:text-primary hover:bg-blue-100/50"
                       asChild
                     >
                       <Link to={`/patients/${patient.id}`}>
@@ -70,20 +71,20 @@ const RecentPatients = () => {
                       </Link>
                     </Button>
                   </td>
-                  <td className="py-4 px-2 text-right">{patient.phone}</td>
-                  <td className="py-4 px-2 text-right">{patient.idNumber}</td>
-                  <td className="py-4 px-2 text-right font-medium">{patient.name}</td>
+                  <td className="py-4 px-4 text-right text-gray-600">{patient.phone}</td>
+                  <td className="py-4 px-4 text-right text-gray-600">{patient.idNumber}</td>
+                  <td className="py-4 px-4 text-right font-medium text-gray-800">{patient.name}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </CardContent>
-      <CardFooter className="bg-gray-50 px-6 py-3 flex justify-between">
+      <CardFooter className="bg-gray-50 px-6 py-3 flex justify-between border-t border-gray-100">
         <Button 
           variant="outline" 
           size="sm" 
-          className="text-xs"
+          className="text-xs text-gray-600 hover:bg-gray-100"
           asChild
         >
           <Link to="/patients">
