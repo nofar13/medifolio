@@ -1,0 +1,178 @@
+
+import { Patient, MedicalHistory, ChartData, PatientDistribution, Appointment } from "@/types";
+
+export const patients: Patient[] = [
+  {
+    id: "1",
+    idNumber: "207205208",
+    name: "יוסי כהן",
+    phone: "050-1234567",
+    email: "yossi@example.com",
+    age: 35,
+    gender: "זכר",
+    additionalNotes: "אלרגיה לאבק",
+    medicalHistory: []
+  },
+  {
+    id: "2",
+    idNumber: "305412687",
+    name: "שרה לוי",
+    phone: "052-7654321",
+    email: "sarah@example.com",
+    age: 42,
+    gender: "נקבה",
+    additionalNotes: "מרכיבה עדשות מגע",
+    medicalHistory: []
+  },
+  {
+    id: "3",
+    idNumber: "401236589",
+    name: "דוד ישראלי",
+    phone: "054-9876543",
+    email: "david@example.com",
+    age: 28,
+    gender: "זכר",
+    additionalNotes: "אחרי ניתוח לייזר בשנת 2020",
+    medicalHistory: []
+  }
+];
+
+export const medicalHistories: MedicalHistory[] = [
+  {
+    id: "1",
+    patientId: "1",
+    date: "01/01/2024",
+    visionData: {
+      rightVision: "6/6",
+      leftVision: "6/9",
+      rightCylindricalRefraction: "0.75-",
+      leftCylindricalRefraction: "1.50-",
+      rightSphericalRefraction: "1.00-",
+      leftSphericalRefraction: "2.50-"
+    },
+    lensesData: {
+      rightGlasses: "2.00-",
+      leftGlasses: "2.50-",
+      pupilDistance: "תקין",
+      angleOfView: "10°",
+      nearPointOfConvergence: "5cm",
+      depthPerception: "שכר"
+    },
+    treatmentNotes: "הומלץ על משקפיים חדשים עם ציפוי אנטי רפלקס",
+    followupNotes: "ביקורת בעוד 6 חודשים",
+    prescriptionNotes: "מרשם למשקפיים ניתן"
+  },
+  {
+    id: "2",
+    patientId: "1",
+    date: "15/01/2024",
+    visionData: {
+      rightVision: "6/7.5",
+      leftVision: "6/9",
+      rightCylindricalRefraction: "0.50-",
+      leftCylindricalRefraction: "1.25-",
+      rightSphericalRefraction: "0.75-",
+      leftSphericalRefraction: "2.25-"
+    },
+    lensesData: {
+      rightGlasses: "1.75-",
+      leftGlasses: "2.25-",
+      pupilDistance: "תקין",
+      angleOfView: "8°",
+      nearPointOfConvergence: "6cm",
+      depthPerception: "שכר"
+    },
+    treatmentNotes: "נבדק עם משקפיים חדשים, תפקוד טוב",
+    followupNotes: "ביקורת בעוד שנה",
+    prescriptionNotes: "אין צורך במרשם חדש"
+  },
+  {
+    id: "3",
+    patientId: "1",
+    date: "30/01/2024",
+    visionData: {
+      rightVision: "6/7.5",
+      leftVision: "6/12",
+      rightCylindricalRefraction: "0.25-",
+      leftCylindricalRefraction: "1.00-",
+      rightSphericalRefraction: "0.50-",
+      leftSphericalRefraction: "2.00-"
+    },
+    lensesData: {
+      rightGlasses: "1.50-",
+      leftGlasses: "2.00-",
+      pupilDistance: "תקין",
+      angleOfView: "7°",
+      nearPointOfConvergence: "7cm",
+      depthPerception: "שכר"
+    },
+    treatmentNotes: "התקדמות חיובית, שיפור קל בראייה",
+    followupNotes: "ביקורת בעוד שנה",
+    prescriptionNotes: "אין צורך במרשם חדש"
+  }
+];
+
+export const monthlyPatientsData: ChartData[] = [
+  { month: "ינואר", patients: 8000 },
+  { month: "פברואר", patients: 12000 },
+  { month: "מרץ", patients: 10000 },
+  { month: "אפריל", patients: 15000 },
+  { month: "מאי", patients: 13000 },
+  { month: "יוני", patients: 17000 }
+];
+
+export const patientDistributionData: PatientDistribution[] = [
+  { name: "מטופלים חדשים", value: 40 },
+  { name: "מטופלים חוזרים", value: 60 }
+];
+
+export const patientsByDoctorData = [
+  { name: "ד״ר אברהם", patients: 180 },
+  { name: "ד״ר אוקטובר", patients: 340 },
+  { name: "ד״ר אוגוסט", patients: 280 },
+  { name: "ד״ר יוני", patients: 340 },
+  { name: "ד״ר אפריל", patients: 290 },
+  { name: "ד״ר פברואר", patients: 290 },
+  { name: "ד״ר ינואר", patients: 220 }
+];
+
+export const patientWaitTimeData = [
+  { name: "ד״ר ינואר", minutes: 40 },
+  { name: "ד״ר פברואר", minutes: 42 },
+  { name: "ד״ר אוקטובר", minutes: 39 },
+  { name: "ד״ר אוגוסט", minutes: 41 },
+  { name: "ד״ר יוני", minutes: 30 },
+  { name: "ד״ר אפריל", minutes: 25 },
+  { name: "ד״ר פברואר", minutes: 22 },
+  { name: "ד״ר ינואר", minutes: 19 }
+];
+
+export const appointments: Appointment[] = [
+  {
+    id: "1",
+    patientId: "1",
+    patientName: "יוסי כהן",
+    date: "2024-06-15",
+    time: "09:00",
+    status: "scheduled",
+    notes: "בדיקת עיניים שגרתית"
+  },
+  {
+    id: "2",
+    patientId: "2",
+    patientName: "שרה לוי",
+    date: "2024-06-16",
+    time: "10:30",
+    status: "scheduled",
+    notes: "התאמת עדשות מגע חדשות"
+  },
+  {
+    id: "3",
+    patientId: "3",
+    patientName: "דוד ישראלי",
+    date: "2024-06-14",
+    time: "14:00",
+    status: "completed",
+    notes: "ביקורת אחרי ניתוח"
+  }
+];

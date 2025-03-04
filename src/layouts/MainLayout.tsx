@@ -1,0 +1,47 @@
+
+import { SidebarNav } from "@/components/SidebarNav";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Transition } from "@/components/ui/transition";
+
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+export function MainLayout({ children }: MainLayoutProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const location = useLocation();
+  const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+
+  useEffect(() => {
+    setIsPageTransitioning(true);
+    const timer = setTimeout(() => {
+      setIsPageTransitioning(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      <SidebarNav 
+        isOpen={isSidebarOpen} 
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
+      <main className={`flex-1 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
+        <div className="container py-8 px-6">
+          <Transition
+            show={!isPageTransitioning}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            {children}
+          </Transition>
+        </div>
+      </main>
+    </div>
+  );
+}
