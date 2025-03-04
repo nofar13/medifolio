@@ -60,5 +60,14 @@ export interface Appointment {
   notes?: string;
 }
 
-export type PatientFormData = Omit<Patient, 'id' | 'medicalHistory'>;
+export type PatientFormData = {
+  idNumber: string;
+  name: string;
+  phone: string;
+  email: string;
+  age: number;
+  gender: string;
+  additionalNotes?: string;
+};
+
 export type MedicalHistoryFormData = Omit<MedicalHistory, 'id' | 'patientId'>;
