@@ -44,7 +44,7 @@ const Index = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">תורים להיום</h3>
-                <p className="text-muted-foreground">2 הושלמו • 1 ממתין •</p>
+                <p className="text-muted-foreground">הושלמו 2, ממתין 1.</p>
               </div>
             </CardContent>
           </Card>
@@ -56,7 +56,7 @@ const Index = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">תורים מחר</h3>
-                <p className="text-muted-foreground">1 דחוף • 7 רגילים •</p>
+                <p className="text-muted-foreground">דחוף 1, רגילים 7.</p>
               </div>
             </CardContent>
           </Card>
@@ -68,7 +68,7 @@ const Index = () => {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">מטופלים החודש</h3>
-                <p className="text-muted-foreground">32 חדשים • 154 חוזרים •</p>
+                <p className="text-muted-foreground">חדשים 32, חוזרים 154.</p>
               </div>
             </CardContent>
           </Card>
