@@ -9,14 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileBar, TrendingUp, Users } from "lucide-react";
-import { Chart } from "@/components/ui/chart";
+import { BarChart2, TrendingUp, Users } from "lucide-react";
 import {
   monthlyPatientsData,
   patientDistributionData,
   patientsByDoctorData,
   patientWaitTimeData,
 } from "@/data/mockData";
+import { BarChart, PieChart, ResponsiveContainer, Bar, Pie, Cell, Tooltip, Legend } from "recharts";
 
 const Stats = () => {
   useEffect(() => {
@@ -30,6 +30,45 @@ const Stats = () => {
     
     return () => clearTimeout(timer);
   }, []);
+
+  // Custom chart component to replace the Chart component
+  const renderChart = (type, data, xAxis, yAxis, height, colors) => {
+    if (type === "bar") {
+      return (
+        <ResponsiveContainer width="100%" height={height}>
+          <BarChart data={data}>
+            <Tooltip />
+            <Legend />
+            <Bar dataKey={yAxis} fill={colors[0]} name={yAxis} />
+          </BarChart>
+        </ResponsiveContainer>
+      );
+    } else if (type === "pie") {
+      return (
+        <ResponsiveContainer width="100%" height={height}>
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              outerRadius={80}
+              dataKey="value"
+              nameKey="name"
+              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      );
+    }
+    return null;
+  };
 
   return (
     <MainLayout>
@@ -59,14 +98,7 @@ const Stats = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Chart
-                    type="bar"
-                    data={monthlyPatientsData}
-                    xAxis="month"
-                    yAxis="patients"
-                    height={300}
-                    colors={["#8884d8"]}
-                  />
+                  {renderChart("bar", monthlyPatientsData, "month", "patients", 300, ["#8884d8"])}
                 </CardContent>
               </Card>
 
@@ -81,14 +113,7 @@ const Stats = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Chart
-                    type="pie"
-                    data={patientDistributionData}
-                    nameKey="name"
-                    dataKey="value"
-                    height={300}
-                    colors={["#0088FE", "#00C49F"]}
-                  />
+                  {renderChart("pie", patientDistributionData, "name", "value", 300, ["#0088FE", "#00C49F"])}
                 </CardContent>
               </Card>
             </div>
@@ -107,21 +132,14 @@ const Stats = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Chart
-                    type="bar"
-                    data={patientsByDoctorData}
-                    xAxis="name"
-                    yAxis="patients"
-                    height={300}
-                    colors={["#8884d8"]}
-                  />
+                  {renderChart("bar", patientsByDoctorData, "name", "patients", 300, ["#8884d8"])}
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
                   <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <FileBar className="h-5 w-5 text-muted-foreground" />
+                    <BarChart2 className="h-5 w-5 text-muted-foreground" />
                     <CardTitle>זמני המתנה ממוצעים</CardTitle>
                   </div>
                   <CardDescription>
@@ -129,14 +147,7 @@ const Stats = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Chart
-                    type="bar"
-                    data={patientWaitTimeData}
-                    xAxis="name"
-                    yAxis="minutes"
-                    height={300}
-                    colors={["#82ca9d"]}
-                  />
+                  {renderChart("bar", patientWaitTimeData, "name", "minutes", 300, ["#82ca9d"])}
                 </CardContent>
               </Card>
             </div>
@@ -155,21 +166,14 @@ const Stats = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Chart
-                    type="bar"
-                    data={patientsByDoctorData}
-                    xAxis="name"
-                    yAxis="patients"
-                    height={300}
-                    colors={["#8884d8"]}
-                  />
+                  {renderChart("bar", patientsByDoctorData, "name", "patients", 300, ["#8884d8"])}
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
                   <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <FileBar className="h-5 w-5 text-muted-foreground" />
+                    <BarChart2 className="h-5 w-5 text-muted-foreground" />
                     <CardTitle>יעילות הטיפול</CardTitle>
                   </div>
                   <CardDescription>
@@ -177,14 +181,7 @@ const Stats = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Chart
-                    type="bar"
-                    data={patientWaitTimeData}
-                    xAxis="name"
-                    yAxis="minutes"
-                    height={300}
-                    colors={["#82ca9d"]}
-                  />
+                  {renderChart("bar", patientWaitTimeData, "name", "minutes", 300, ["#82ca9d"])}
                 </CardContent>
               </Card>
             </div>

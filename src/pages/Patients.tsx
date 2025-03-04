@@ -7,7 +7,7 @@ import { UserPlus } from "lucide-react";
 import { patients } from "@/data/mockData";
 import { Patient } from "@/types";
 import AddPatientForm from "@/components/Patients/AddPatientForm";
-import PatientForm from "@/components/Patients/PatientForm";
+import { PatientForm } from "@/components/Patients/PatientForm";
 import { PatientHistory } from "@/components/Patients/PatientHistory";
 import { toast } from "@/hooks/use-toast";
 
@@ -82,22 +82,27 @@ const Patients = () => {
           </TabsContent>
           
           <TabsContent value="view">
-            <PatientHistory />
+            <PatientHistory 
+              history={allPatients.flatMap(patient => 
+                patient.medicalHistory?.map(history => ({
+                  ...history,
+                  patientName: patient.name
+                })) || []
+              )} 
+            />
           </TabsContent>
         </Tabs>
 
         {isAddingPatient && (
           <AddPatientForm
-            open={isAddingPatient}
-            onOpenChange={setIsAddingPatient}
+            onClose={() => setIsAddingPatient(false)}
             onAddPatient={handleAddPatient}
           />
         )}
 
         {isEditing && selectedPatient && (
           <AddPatientForm
-            open={isEditing}
-            onOpenChange={setIsEditing}
+            onClose={() => setIsEditing(false)}
             patient={selectedPatient}
             onUpdatePatient={handleUpdatePatient}
             mode="edit"
