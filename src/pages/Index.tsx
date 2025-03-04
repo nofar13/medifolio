@@ -24,46 +24,49 @@ const Index = () => {
       <div className="main-content opacity-0">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center">
-            <div className="p-3 bg-primary/10 rounded-lg mr-4 shadow-sm">
-              <Eye className="h-8 w-8 text-primary" />
+            <div className="p-3 bg-blue-500/10 rounded-lg mr-4 shadow-md">
+              <Eye className="h-8 w-8 text-blue-600" />
             </div>
-            <h1 className="text-2xl font-semibold text-gray-800">מרפאת יונינה - ניהול מרפאת עיניים</h1>
+            <h1 className="text-3xl font-bold text-blue-900 tracking-tight">מרפאת יונינה - ניהול מרפאת עיניים</h1>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="formal-card border-t-4 border-t-green-500 hover:border-t-green-600 transition-colors">
+          <Card className="border-0 shadow-lg overflow-hidden rounded-xl hover:shadow-xl transition-all duration-300">
+            <div className="h-2 bg-green-500 w-full"></div>
             <CardContent className="p-6 flex items-center">
-              <div className="h-14 w-14 rounded-full bg-green-50 flex items-center justify-center mr-4 shadow-sm">
-                <Calendar className="h-6 w-6 text-green-600" />
+              <div className="h-16 w-16 rounded-full bg-green-50 flex items-center justify-center mr-4 shadow-md border border-green-100">
+                <Calendar className="h-8 w-8 text-green-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">תורים להיום</h3>
-                <p className="text-muted-foreground">הושלמו 2, ממתין 1</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-1">תורים להיום</h3>
+                <p className="text-muted-foreground font-medium">הושלמו 2, ממתין 1</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="formal-card border-t-4 border-t-blue-500 hover:border-t-blue-600 transition-colors">
+          <Card className="border-0 shadow-lg overflow-hidden rounded-xl hover:shadow-xl transition-all duration-300">
+            <div className="h-2 bg-blue-500 w-full"></div>
             <CardContent className="p-6 flex items-center">
-              <div className="h-14 w-14 rounded-full bg-blue-50 flex items-center justify-center mr-4 shadow-sm">
-                <Calendar className="h-6 w-6 text-blue-600" />
+              <div className="h-16 w-16 rounded-full bg-blue-50 flex items-center justify-center mr-4 shadow-md border border-blue-100">
+                <Calendar className="h-8 w-8 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">תורים מחר</h3>
-                <p className="text-muted-foreground">דחוף 1, רגילים 7</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-1">תורים מחר</h3>
+                <p className="text-muted-foreground font-medium">דחוף 1, רגילים 7</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="formal-card border-t-4 border-t-purple-500 hover:border-t-purple-600 transition-colors">
+          <Card className="border-0 shadow-lg overflow-hidden rounded-xl hover:shadow-xl transition-all duration-300">
+            <div className="h-2 bg-purple-500 w-full"></div>
             <CardContent className="p-6 flex items-center">
-              <div className="h-14 w-14 rounded-full bg-purple-50 flex items-center justify-center mr-4 shadow-sm">
-                <Users className="h-6 w-6 text-purple-600" />
+              <div className="h-16 w-16 rounded-full bg-purple-50 flex items-center justify-center mr-4 shadow-md border border-purple-100">
+                <Users className="h-8 w-8 text-purple-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">מטופלים החודש</h3>
-                <p className="text-muted-foreground">חדשים 32, חוזרים 154</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-1">מטופלים החודש</h3>
+                <p className="text-muted-foreground font-medium">חדשים 32, חוזרים 154</p>
               </div>
             </CardContent>
           </Card>

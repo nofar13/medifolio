@@ -1,6 +1,6 @@
-
 import { useState } from "react";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,15 +32,15 @@ const UpcomingAppointments = () => {
   };
 
   return (
-    <Card className="border border-gray-200 shadow-formal transition-shadow duration-300 hover:shadow-formal-hover">
-      <CardHeader className="bg-gradient-to-r from-purple-50 to-purple-100 pb-3 pt-5 px-6 border-b border-gray-100">
-        <CardTitle className="text-lg font-semibold text-gray-800 flex justify-between items-center">
+    <Card className="border-0 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+      <CardHeader className="bg-gradient-to-r from-purple-500 to-purple-600 pb-3 pt-5 px-6">
+        <CardTitle className="text-lg font-bold text-white flex justify-between items-center">
           <div className="flex space-x-2 rtl:space-x-reverse">
             <Button 
               variant={view === "today" ? "default" : "outline"} 
               size="sm" 
               onClick={() => setView("today")}
-              className={view === "today" ? "" : "bg-white hover:bg-gray-100"}
+              className={view === "today" ? "bg-white text-purple-700 hover:bg-white/90" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}
             >
               היום
             </Button>
@@ -48,7 +48,7 @@ const UpcomingAppointments = () => {
               variant={view === "all" ? "default" : "outline"} 
               size="sm" 
               onClick={() => setView("all")}
-              className={view === "all" ? "" : "bg-white hover:bg-gray-100"}
+              className={view === "all" ? "bg-white text-purple-700 hover:bg-white/90" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}
             >
               הכל
             </Button>
@@ -68,11 +68,11 @@ const UpcomingAppointments = () => {
             {displayedAppointments.map((appointment) => (
               <div 
                 key={appointment.id} 
-                className="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-lg hover:border-gray-200 hover:bg-gray-50/50 transition-colors shadow-sm"
+                className="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-lg hover:shadow-md transition-all duration-200"
               >
                 <div className="flex space-x-2 rtl:space-x-reverse">
                   <Button variant="outline" size="sm" className="h-8 w-8 p-0 border-gray-200 bg-white">
-                    <Calendar className="h-4 w-4 text-gray-500" />
+                    <Calendar className="h-4 w-4 text-purple-500" />
                   </Button>
                   <div className="text-right">
                     <p className="font-medium text-gray-800">{appointment.patientName}</p>
@@ -94,9 +94,16 @@ const UpcomingAppointments = () => {
         )}
       </CardContent>
       <CardFooter className="bg-gray-50 px-6 py-3 border-t border-gray-100">
-        <Button variant="outline" size="sm" className="ml-auto text-xs text-gray-600 hover:bg-gray-100">
-          נהל תורים
-          <ChevronLeft className="ml-1 h-3 w-3" />
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="ml-auto text-xs text-gray-600 hover:bg-gray-100 border-gray-200"
+          asChild
+        >
+          <Link to="/appointments">
+            נהל תורים
+            <ChevronLeft className="ml-1 h-3 w-3" />
+          </Link>
         </Button>
       </CardFooter>
     </Card>

@@ -29,16 +29,16 @@ const RecentPatients = () => {
   };
 
   return (
-    <Card className="border border-gray-200 shadow-formal transition-shadow duration-300 hover:shadow-formal-hover">
-      <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 pb-3 pt-5 px-6 border-b border-gray-100">
-        <CardTitle className="text-lg font-semibold text-gray-800 flex justify-between items-center">
+    <Card className="border-0 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+      <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 pb-3 pt-5 px-6">
+        <CardTitle className="text-lg font-bold text-white flex justify-between items-center">
           <div className="relative w-[250px]">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-blue-200" />
             <Input
               placeholder="חיפוש מטופל..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/90 border-gray-200"
+              className="pl-10 bg-white/10 border-white/20 placeholder-blue-200 text-white"
               dir="rtl"
             />
           </div>
@@ -48,7 +48,7 @@ const RecentPatients = () => {
       <CardContent className="p-0">
         <div className="overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">פעולות</th>
                 <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">טלפון</th>
@@ -63,7 +63,7 @@ const RecentPatients = () => {
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-gray-500 hover:text-primary hover:bg-blue-100/50"
+                      className="text-gray-500 hover:text-blue-600 hover:bg-blue-100/50"
                       asChild
                     >
                       <Link to={`/patients/${patient.id}`}>
@@ -84,7 +84,7 @@ const RecentPatients = () => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="text-xs text-gray-600 hover:bg-gray-100"
+          className="text-xs text-gray-600 hover:bg-gray-100 border-gray-200"
           asChild
         >
           <Link to="/patients">
