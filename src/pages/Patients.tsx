@@ -76,8 +76,9 @@ const Patients = () => {
           
           <TabsContent value="list">
             <PatientForm 
-              patients={allPatients} 
-              onEdit={handleEditPatient}
+              initialValues={{}}
+              onSubmit={() => {}}
+              submitLabel="שמור"
             />
           </TabsContent>
           
@@ -95,17 +96,15 @@ const Patients = () => {
 
         {isAddingPatient && (
           <AddPatientForm
-            onClose={() => setIsAddingPatient(false)}
-            onAddPatient={handleAddPatient}
+            onPatientAdded={handleAddPatient}
           />
         )}
 
         {isEditing && selectedPatient && (
           <AddPatientForm
-            onClose={() => setIsEditing(false)}
             patient={selectedPatient}
-            onUpdatePatient={handleUpdatePatient}
-            mode="edit"
+            onPatientAdded={handleUpdatePatient}
+            isEditing={true}
           />
         )}
       </div>
