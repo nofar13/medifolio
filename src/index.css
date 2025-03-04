@@ -1,11 +1,13 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,8 +16,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 142 76% 36%;
-    --primary-foreground: 355.7 100% 97.3%;
+    --primary: 210 100% 35%;
+    --primary-foreground: 0 0% 98%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -31,9 +33,13 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 142 76% 36%;
+    --ring: 210 100% 35%;
 
-    --radius: 0.5rem;
+    --radius: 0.4rem;
+    
+    --sidebar-background: 210 33% 99%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-border: 214.3 31.8% 91.4%;
   }
 
   .dark {
@@ -46,8 +52,8 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 142 76% 36%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 210 100% 35%;
+    --primary-foreground: 0 0% 98%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -63,7 +69,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 142 76% 36%;
+    --ring: 210 100% 35%;
   }
 }
 
@@ -129,12 +135,12 @@
 }
 
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .text-gradient {
@@ -144,12 +150,25 @@
 }
 
 .icon-glow {
-  filter: drop-shadow(0 0 8px hsl(var(--primary)/0.4));
+  filter: drop-shadow(0 0 4px hsl(var(--primary)/0.3));
+}
+
+/* Custom styles for formal design */
+.formal-card {
+  @apply border border-gray-200 bg-white shadow-formal transition-all duration-200;
+}
+
+.formal-card:hover {
+  @apply shadow-formal-hover;
+}
+
+.formal-heading {
+  @apply font-semibold tracking-tight;
 }
 
 /* Custom styles for data charts */
 .chart-container {
-  @apply rounded-xl p-4 bg-white shadow-md transition-all duration-300 hover:shadow-lg;
+  @apply rounded-lg p-4 bg-white shadow-formal transition-all duration-300 hover:shadow-formal-hover;
 }
 
 .chart-title {

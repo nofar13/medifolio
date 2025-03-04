@@ -19,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -105,6 +108,10 @@ export default {
                 'shimmer': 'shimmer 2s infinite linear',
                 'fade-in': 'fadeIn 0.5s ease-out forwards',
                 'float': 'float 6s ease-in-out infinite'
+			},
+			boxShadow: {
+				'formal': '0 4px 12px rgba(0, 0, 0, 0.05)',
+				'formal-hover': '0 8px 24px rgba(0, 0, 0, 0.12)',
 			}
 		}
 	},
