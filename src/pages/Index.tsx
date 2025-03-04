@@ -1,7 +1,5 @@
-
 import { useEffect } from "react";
 import { MainLayout } from "@/layouts/MainLayout";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye } from "lucide-react";
 import RecentPatients from "@/components/Dashboard/RecentPatients";
@@ -29,10 +27,6 @@ const Index = () => {
               <Eye className="h-8 w-8 text-primary" />
             </div>
             <h1 className="text-2xl font-semibold text-gray-900">מרפאת יונינה - ניהול מרפאת עיניים</h1>
-          </div>
-          <div className="flex space-x-2 rtl:space-x-reverse mt-4 md:mt-0">
-            <Button variant="outline" className="border-gray-300">ייצוא נתונים</Button>
-            <Button className="shadow-sm">הוסף מטופל חדש</Button>
           </div>
         </div>
 
