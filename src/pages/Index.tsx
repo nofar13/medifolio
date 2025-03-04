@@ -33,10 +33,10 @@ const Index = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="border-0 shadow-lg overflow-hidden rounded-xl hover:shadow-xl transition-all duration-300">
-            <div className="h-2 bg-green-500 w-full"></div>
+            <div className="h-2 bg-blue-500 w-full"></div>
             <CardContent className="p-6 flex items-center">
-              <div className="h-16 w-16 rounded-full bg-green-50 flex items-center justify-center mr-4 shadow-md border border-green-100">
-                <Calendar className="h-8 w-8 text-green-600" />
+              <div className="h-16 w-16 rounded-full bg-blue-50 flex items-center justify-center mr-4 shadow-md border border-blue-100">
+                <Calendar className="h-8 w-8 text-blue-600" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-800 mb-1">תורים להיום</h3>
@@ -59,10 +59,10 @@ const Index = () => {
           </Card>
 
           <Card className="border-0 shadow-lg overflow-hidden rounded-xl hover:shadow-xl transition-all duration-300">
-            <div className="h-2 bg-purple-500 w-full"></div>
+            <div className="h-2 bg-blue-500 w-full"></div>
             <CardContent className="p-6 flex items-center">
-              <div className="h-16 w-16 rounded-full bg-purple-50 flex items-center justify-center mr-4 shadow-md border border-purple-100">
-                <Users className="h-8 w-8 text-purple-600" />
+              <div className="h-16 w-16 rounded-full bg-blue-50 flex items-center justify-center mr-4 shadow-md border border-blue-100">
+                <Users className="h-8 w-8 text-blue-600" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-800 mb-1">מטופלים החודש</h3>

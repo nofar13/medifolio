@@ -1,11 +1,14 @@
-
 import { Patient, MedicalHistory, ChartData, PatientDistribution, Appointment } from "@/types";
-import { addDays, format } from "date-fns";
+import { addDays, format, subDays } from "date-fns";
 
 // Generate dates for tomorrow, day after tomorrow, and day after that
 const tomorrow = format(addDays(new Date(), 1), "yyyy-MM-dd");
 const dayAfterTomorrow = format(addDays(new Date(), 2), "yyyy-MM-dd");
 const threeDaysFromNow = format(addDays(new Date(), 3), "yyyy-MM-dd");
+
+// Generate past dates for completed appointments
+const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
+const twoDaysAgo = format(subDays(new Date(), 2), "yyyy-MM-dd");
 
 export const patients: Patient[] = [
   {
@@ -176,9 +179,18 @@ export const appointments: Appointment[] = [
     id: "3",
     patientId: "3",
     patientName: "דוד ישראלי",
-    date: threeDaysFromNow,
+    date: yesterday,
     time: "14:00",
     status: "completed",
     notes: "ביקורת אחרי ניתוח"
+  },
+  {
+    id: "4",
+    patientId: "1",
+    patientName: "יוסי כהן",
+    date: twoDaysAgo,
+    time: "11:30",
+    status: "completed",
+    notes: "בדיקת לחץ תוך-עיני"
   }
 ];
