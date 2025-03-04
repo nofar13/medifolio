@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 100% 35%;
+    --primary: 210 75% 50%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -33,7 +33,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 210 100% 35%;
+    --ring: 210 75% 50%;
 
     --radius: 0.4rem;
     
@@ -173,4 +173,17 @@
 
 .chart-title {
   @apply text-lg font-medium text-gray-800 mb-4 text-right;
+}
+
+/* Custom subtle blue palette */
+.bg-subtle-blue {
+  background-color: #D3E4FD;
+}
+
+.text-subtle-blue {
+  color: #4682B4;
+}
+
+.border-subtle-blue {
+  border-color: #B8D1E5;
 }
