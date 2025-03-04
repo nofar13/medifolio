@@ -1,16 +1,20 @@
-
 import { MainLayout } from "@/layouts/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { Patient } from "@/types";
-import { patients } from "@/data/mockData";
-import { Button } from "@/components/ui/button";
-import { PlusCircle, Search } from "lucide-react";
+import { patients as initialPatients } from "@/data/mockData";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import AddPatientForm from "@/components/Patients/AddPatientForm";
 
 const Patients = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [patients, setPatients] = useState<Patient[]>(initialPatients);
   
+  const handlePatientAdded = (newPatient: Patient) => {
+    setPatients(prevPatients => [...prevPatients, newPatient]);
+  };
+
   const filteredPatients = patients.filter(patient => 
     patient.name.includes(searchTerm) || 
     patient.idNumber.includes(searchTerm) ||
@@ -22,10 +26,7 @@ const Patients = () => {
       <div className="animate-fadeIn">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">ניהול מטופלים</h1>
-          <Button>
-            <PlusCircle className="ml-2 h-4 w-4" />
-            הוסף מטופל חדש
-          </Button>
+          <AddPatientForm onPatientAdded={handlePatientAdded} />
         </div>
         
         <Card>

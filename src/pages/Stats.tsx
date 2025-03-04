@@ -1,6 +1,6 @@
 
 import { MainLayout } from "@/layouts/MainLayout";
-import { BarChart, FileBar } from "lucide-react";
+import { BarChart } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import DashboardStats from "@/components/Dashboard/DashboardStats";
 

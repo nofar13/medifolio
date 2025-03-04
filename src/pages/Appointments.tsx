@@ -1,13 +1,18 @@
-
 import { MainLayout } from "@/layouts/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { appointments } from "@/data/mockData";
+import { appointments as initialAppointments } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, CalendarIcon } from "lucide-react";
 import { useState } from "react";
+import { Appointment } from "@/types";
+import AddAppointmentForm from "@/components/Appointments/AddAppointmentForm";
 
 const Appointments = () => {
   const [filter, setFilter] = useState<"all" | "scheduled" | "completed">("all");
+  const [appointments, setAppointments] = useState<Appointment[]>(initialAppointments);
+
+  const handleAppointmentAdded = (newAppointment: Appointment) => {
+    setAppointments(prevAppointments => [...prevAppointments, newAppointment]);
+  };
   
   const filteredAppointments = appointments.filter(appointment => {
     if (filter === "all") return true;
@@ -19,10 +24,7 @@ const Appointments = () => {
       <div className="animate-fadeIn">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">ניהול פגישות</h1>
-          <Button>
-            <PlusCircle className="ml-2 h-4 w-4" />
-            קבע פגישה חדשה
-          </Button>
+          <AddAppointmentForm onAppointmentAdded={handleAppointmentAdded} />
         </div>
         
         <div className="flex justify-end mb-4 space-x-2 rtl:space-x-reverse">
