@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
@@ -33,14 +34,14 @@ const UpcomingAppointments = () => {
 
   return (
     <Card className="border-0 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
-      <CardHeader className="bg-gradient-to-r from-purple-500 to-purple-600 pb-3 pt-5 px-6">
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 pb-3 pt-5 px-6">
         <CardTitle className="text-lg font-bold text-white flex justify-between items-center">
           <div className="flex space-x-2 rtl:space-x-reverse">
             <Button 
               variant={view === "today" ? "default" : "outline"} 
               size="sm" 
               onClick={() => setView("today")}
-              className={view === "today" ? "bg-white text-purple-700 hover:bg-white/90" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}
+              className={view === "today" ? "bg-white text-blue-700 hover:bg-white/90" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}
             >
               היום
             </Button>
@@ -48,7 +49,7 @@ const UpcomingAppointments = () => {
               variant={view === "all" ? "default" : "outline"} 
               size="sm" 
               onClick={() => setView("all")}
-              className={view === "all" ? "bg-white text-purple-700 hover:bg-white/90" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}
+              className={view === "all" ? "bg-white text-blue-700 hover:bg-white/90" : "bg-white/10 border-white/20 text-white hover:bg-white/20"}
             >
               הכל
             </Button>
@@ -72,7 +73,7 @@ const UpcomingAppointments = () => {
               >
                 <div className="flex space-x-2 rtl:space-x-reverse">
                   <Button variant="outline" size="sm" className="h-8 w-8 p-0 border-gray-200 bg-white">
-                    <Calendar className="h-4 w-4 text-purple-500" />
+                    <Calendar className="h-4 w-4 text-blue-600" />
                   </Button>
                   <div className="text-right">
                     <p className="font-medium text-gray-800">{appointment.patientName}</p>

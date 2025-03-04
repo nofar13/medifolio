@@ -3,7 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { format } from "date-fns";
+import { format, isBefore, startOfDay } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -41,13 +41,19 @@ import { CalendarIcon, PlusCircle } from "lucide-react";
 import { patients } from "@/data/mockData";
 import { Appointment } from "@/types";
 
+// Validate that the date is in the future
 const formSchema = z.object({
   patientId: z.string({
     required_error: "יש לבחור מטופל",
   }),
   date: z.date({
     required_error: "יש לבחור תאריך",
-  }),
+  }).refine(
+    (date) => !isBefore(date, startOfDay(new Date())),
+    {
+      message: "לא ניתן לקבוע פגישה לתאריך שעבר",
+    }
+  ),
   time: z.string({
     required_error: "יש לבחור שעה",
   }),
@@ -118,7 +124,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="bg-blue-600 hover:bg-blue-700">
           <PlusCircle className="ml-2 h-4 w-4" />
           קבע פגישה חדשה
         </Button>
@@ -185,6 +191,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => 
                           selected={field.value}
                           onSelect={field.onChange}
                           initialFocus
+                          disabled={(date) => isBefore(date, startOfDay(new Date()))}
                         />
                       </PopoverContent>
                     </Popover>
@@ -234,7 +241,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => 
               )}
             />
             <DialogFooter className="sm:justify-center">
-              <Button type="submit" className="w-full md:w-auto">קבע פגישה</Button>
+              <Button type="submit" className="w-full md:w-auto bg-blue-600 hover:bg-blue-700">קבע פגישה</Button>
             </DialogFooter>
           </form>
         </Form>

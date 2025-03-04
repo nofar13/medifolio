@@ -30,7 +30,7 @@ const RecentPatients = () => {
 
   return (
     <Card className="border-0 shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
-      <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 pb-3 pt-5 px-6">
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 pb-3 pt-5 px-6">
         <CardTitle className="text-lg font-bold text-white flex justify-between items-center">
           <div className="relative w-[250px]">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-blue-200" />
@@ -38,7 +38,7 @@ const RecentPatients = () => {
               placeholder="חיפוש מטופל..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/20 border-white/30 placeholder-blue-100 text-white font-semibold"
+              className="pl-10 bg-white/30 border-white/40 placeholder-blue-50 text-white font-semibold"
               dir="rtl"
             />
           </div>

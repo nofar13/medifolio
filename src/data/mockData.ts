@@ -1,5 +1,11 @@
 
 import { Patient, MedicalHistory, ChartData, PatientDistribution, Appointment } from "@/types";
+import { addDays, format } from "date-fns";
+
+// Generate dates for tomorrow, day after tomorrow, and day after that
+const tomorrow = format(addDays(new Date(), 1), "yyyy-MM-dd");
+const dayAfterTomorrow = format(addDays(new Date(), 2), "yyyy-MM-dd");
+const threeDaysFromNow = format(addDays(new Date(), 3), "yyyy-MM-dd");
 
 export const patients: Patient[] = [
   {
@@ -152,7 +158,7 @@ export const appointments: Appointment[] = [
     id: "1",
     patientId: "1",
     patientName: "יוסי כהן",
-    date: "2024-06-15",
+    date: tomorrow,
     time: "09:00",
     status: "scheduled",
     notes: "בדיקת עיניים שגרתית"
@@ -161,7 +167,7 @@ export const appointments: Appointment[] = [
     id: "2",
     patientId: "2",
     patientName: "שרה לוי",
-    date: "2024-06-16",
+    date: dayAfterTomorrow,
     time: "10:30",
     status: "scheduled",
     notes: "התאמת עדשות מגע חדשות"
@@ -170,7 +176,7 @@ export const appointments: Appointment[] = [
     id: "3",
     patientId: "3",
     patientName: "דוד ישראלי",
-    date: "2024-06-14",
+    date: threeDaysFromNow,
     time: "14:00",
     status: "completed",
     notes: "ביקורת אחרי ניתוח"

@@ -1,3 +1,4 @@
+
 import { MainLayout } from "@/layouts/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { appointments as initialAppointments } from "@/data/mockData";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Appointment } from "@/types";
 import AddAppointmentForm from "@/components/Appointments/AddAppointmentForm";
+import { isBefore, parseISO, startOfDay } from "date-fns";
 
 const Appointments = () => {
   const [filter, setFilter] = useState<"all" | "scheduled" | "completed">("all");
@@ -14,7 +16,13 @@ const Appointments = () => {
     setAppointments(prevAppointments => [...prevAppointments, newAppointment]);
   };
   
-  const filteredAppointments = appointments.filter(appointment => {
+  // Filter appointments to only show future appointments or completed ones
+  const validAppointments = appointments.filter(appointment => {
+    const appointmentDate = parseISO(appointment.date);
+    return appointment.status === "completed" || !isBefore(appointmentDate, startOfDay(new Date()));
+  });
+  
+  const filteredAppointments = validAppointments.filter(appointment => {
     if (filter === "all") return true;
     return appointment.status === filter;
   });
@@ -31,33 +39,36 @@ const Appointments = () => {
           <Button 
             variant={filter === "all" ? "default" : "outline"}
             onClick={() => setFilter("all")}
+            className={filter === "all" ? "bg-blue-600 hover:bg-blue-700" : ""}
           >
             הכל
           </Button>
           <Button 
             variant={filter === "scheduled" ? "default" : "outline"}
             onClick={() => setFilter("scheduled")}
+            className={filter === "scheduled" ? "bg-blue-600 hover:bg-blue-700" : ""}
           >
             מתוכננות
           </Button>
           <Button 
             variant={filter === "completed" ? "default" : "outline"}
             onClick={() => setFilter("completed")}
+            className={filter === "completed" ? "bg-blue-600 hover:bg-blue-700" : ""}
           >
             הושלמו
           </Button>
         </div>
         
         <Card>
-          <CardHeader className="bg-gray-50 py-4">
-            <CardTitle className="text-xl text-right">לוח פגישות</CardTitle>
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 py-4">
+            <CardTitle className="text-xl text-right text-white">לוח פגישות</CardTitle>
           </CardHeader>
           
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200 bg-gray-50">
                     <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">פעולות</th>
                     <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">הערות</th>
                     <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">סטטוס</th>
@@ -72,8 +83,8 @@ const Appointments = () => {
                       <tr key={appointment.id} className="border-b border-gray-200 hover:bg-gray-50">
                         <td className="py-4 px-4">
                           <div className="flex space-x-2 rtl:space-x-reverse">
-                            <Button variant="ghost" size="sm">ערוך</Button>
-                            <Button variant="ghost" size="sm" className="text-red-500">בטל</Button>
+                            <Button variant="ghost" size="sm" className="text-blue-600 hover:bg-blue-50">ערוך</Button>
+                            <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50">בטל</Button>
                           </div>
                         </td>
                         <td className="py-4 px-4 text-right">{appointment.notes}</td>
