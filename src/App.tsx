@@ -11,6 +11,7 @@ import Patients from "@/pages/Patients";
 import PatientTreatment from "@/pages/PatientTreatment";
 import Appointments from "@/pages/Appointments";
 import Stats from "@/pages/Stats";
+import CurrentTreatment from "@/pages/CurrentTreatment";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/settings" element={<Settings />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/patients/:patientId/treatment" element={<PatientTreatment />} />
+          <Route path="/patients/:patientId/current-treatment" element={<CurrentTreatment />} />
           <Route path="/appointments" element={<Appointments />} />
           <Route path="/stats" element={<Stats />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
