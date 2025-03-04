@@ -23,7 +23,7 @@ const Index = () => {
   return (
     <MainLayout>
       <div className="main-content opacity-0">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-100 pb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center">
             <div className="p-2 bg-primary/10 rounded-lg mr-3">
               <Eye className="h-8 w-8 text-primary" />
