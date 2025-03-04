@@ -1,59 +1,195 @@
 
 import { MainLayout } from "@/layouts/MainLayout";
-import { BarChart } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import DashboardStats from "@/components/Dashboard/DashboardStats";
+import { useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileBar, TrendingUp, Users } from "lucide-react";
+import { Chart } from "@/components/ui/chart";
+import {
+  monthlyPatientsData,
+  patientDistributionData,
+  patientsByDoctorData,
+  patientWaitTimeData,
+} from "@/data/mockData";
 
 const Stats = () => {
+  useEffect(() => {
+    // Simulate loading with a subtle animation
+    const timer = setTimeout(() => {
+      const mainContent = document.querySelector(".main-content");
+      if (mainContent) {
+        mainContent.classList.add("animate-fadeIn");
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <MainLayout>
-      <div className="main-content animate-fadeIn">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <div className="flex items-center">
-            <BarChart className="h-10 w-10 text-primary mr-3 icon-glow" />
-            <h1 className="text-3xl font-bold">סטטיסטיקות מרפאה</h1>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="hover-lift">
-            <CardContent className="p-6 flex items-center">
-              <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                <span className="text-green-600 text-xl font-bold">15%</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">גידול במספר מטופלים</h3>
-                <p className="text-muted-foreground">בהשוואה לחודש קודם</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="hover-lift">
-            <CardContent className="p-6 flex items-center">
-              <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                <span className="text-blue-600 text-xl font-bold">42</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">ממוצע מטופלים שבועי</h3>
-                <p className="text-muted-foreground">מתוך 6 שבועות אחרונים</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="hover-lift">
-            <CardContent className="p-6 flex items-center">
-              <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center mr-4">
-                <span className="text-purple-600 text-xl font-bold">₪9.5K</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">הכנסה חודשית ממוצעת</h3>
-                <p className="text-muted-foreground">3 חודשים אחרונים</p>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="main-content opacity-0">
+        <div className="flex items-center mb-8">
+          <TrendingUp className="h-10 w-10 text-primary mr-3" />
+          <h1 className="text-3xl font-bold">סטטיסטיקות וניתוח נתונים</h1>
         </div>
 
-        <DashboardStats />
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="mb-6">
+            <TabsTrigger value="overview">סקירה כללית</TabsTrigger>
+            <TabsTrigger value="patients">מטופלים</TabsTrigger>
+            <TabsTrigger value="doctors">רופאים</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <Users className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle>מטופלים חודשיים</CardTitle>
+                  </div>
+                  <CardDescription>
+                    כמות המטופלים בששת החודשים האחרונים
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    type="bar"
+                    data={monthlyPatientsData}
+                    xAxis="month"
+                    yAxis="patients"
+                    height={300}
+                    colors={["#8884d8"]}
+                  />
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <Users className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle>התפלגות מטופלים</CardTitle>
+                  </div>
+                  <CardDescription>
+                    התפלגות בין מטופלים חדשים וחוזרים
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    type="pie"
+                    data={patientDistributionData}
+                    nameKey="name"
+                    dataKey="value"
+                    height={300}
+                    colors={["#0088FE", "#00C49F"]}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="patients">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <Users className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle>מטופלים לפי רופא</CardTitle>
+                  </div>
+                  <CardDescription>
+                    כמות המטופלים שכל רופא טיפל בהם
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    type="bar"
+                    data={patientsByDoctorData}
+                    xAxis="name"
+                    yAxis="patients"
+                    height={300}
+                    colors={["#8884d8"]}
+                  />
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <FileBar className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle>זמני המתנה ממוצעים</CardTitle>
+                  </div>
+                  <CardDescription>
+                    זמן המתנה ממוצע לכל רופא (בדקות)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    type="bar"
+                    data={patientWaitTimeData}
+                    xAxis="name"
+                    yAxis="minutes"
+                    height={300}
+                    colors={["#82ca9d"]}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="doctors">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <Users className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle>ביצועי רופאים</CardTitle>
+                  </div>
+                  <CardDescription>
+                    כמות המטופלים וזמני המתנה לפי רופא
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    type="bar"
+                    data={patientsByDoctorData}
+                    xAxis="name"
+                    yAxis="patients"
+                    height={300}
+                    colors={["#8884d8"]}
+                  />
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                    <FileBar className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle>יעילות הטיפול</CardTitle>
+                  </div>
+                  <CardDescription>
+                    זמן טיפול ממוצע לכל רופא (בדקות)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    type="bar"
+                    data={patientWaitTimeData}
+                    xAxis="name"
+                    yAxis="minutes"
+                    height={300}
+                    colors={["#82ca9d"]}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </MainLayout>
   );

@@ -1,275 +1,554 @@
 
-import { MainLayout } from "@/layouts/MainLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
-import { patients as initialPatients, medicalHistories } from "@/data/mockData";
-import { Patient, MedicalHistory } from "@/types";
-import { ArrowRight } from "lucide-react";
+import { medicalHistories, patients } from "@/data/mockData";
+import { MedicalHistory, Patient } from "@/types";
+
+const formSchema = z.object({
+  rightVision: z.string().optional(),
+  leftVision: z.string().optional(),
+  rightCylindricalRefraction: z.string().optional(),
+  leftCylindricalRefraction: z.string().optional(),
+  rightSphericalRefraction: z.string().optional(),
+  leftSphericalRefraction: z.string().optional(),
+  rightGlasses: z.string().optional(),
+  leftGlasses: z.string().optional(),
+  pupilDistance: z.string().optional(),
+  angleOfView: z.string().optional(),
+  nearPointOfConvergence: z.string().optional(),
+  depthPerception: z.string().optional(),
+  treatmentNotes: z.string().optional(),
+  followupNotes: z.string().optional(),
+  prescriptionNotes: z.string().optional(),
+});
 
 const PatientTreatment = () => {
-  const { patientId } = useParams();
+  const { patientId } = useParams<{ patientId: string }>();
   const navigate = useNavigate();
-  const [patient, setPatient] = useState<Patient | null>(null);
-  
-  // Vision data
-  const [rightVision, setRightVision] = useState("");
-  const [leftVision, setLeftVision] = useState("");
-  const [rightCylindrical, setRightCylindrical] = useState("");
-  const [leftCylindrical, setLeftCylindrical] = useState("");
-  const [rightSpherical, setRightSpherical] = useState("");
-  const [leftSpherical, setLeftSpherical] = useState("");
-  
-  // Lenses data
-  const [rightGlasses, setRightGlasses] = useState("");
-  const [leftGlasses, setLeftGlasses] = useState("");
-  const [pupilDistance, setPupilDistance] = useState("");
-  const [angleOfView, setAngleOfView] = useState("");
-  const [nearPointOfConvergence, setNearPointOfConvergence] = useState("");
-  const [depthPerception, setDepthPerception] = useState("");
-  
-  // Notes
-  const [treatmentNotes, setTreatmentNotes] = useState("");
-  const [followupNotes, setFollowupNotes] = useState("");
-  const [prescriptionNotes, setPrescriptionNotes] = useState("");
+  const [patient, setPatient] = useState<Patient | undefined>();
+  const [histories, setHistories] = useState<MedicalHistory[]>([]);
 
   useEffect(() => {
-    if (!patientId) return;
-    
-    const foundPatient = initialPatients.find(p => p.id === patientId);
-    if (foundPatient) {
-      setPatient(foundPatient);
-    } else {
-      toast({
-        title: "שגיאה",
-        description: "לא נמצא מטופל עם המזהה שצוין",
-        variant: "destructive"
-      });
-      navigate("/patients");
+    if (patientId) {
+      const foundPatient = patients.find(p => p.id === patientId);
+      if (foundPatient) {
+        setPatient(foundPatient);
+        const patientHistories = medicalHistories.filter(h => h.patientId === patientId);
+        setHistories(patientHistories);
+      } else {
+        toast({
+          title: "שגיאה",
+          description: "המטופל לא נמצא",
+          variant: "destructive",
+        });
+        navigate("/patients");
+      }
     }
+    
+    // Simulate loading with a subtle animation
+    const timer = setTimeout(() => {
+      const mainContent = document.querySelector(".main-content");
+      if (mainContent) {
+        mainContent.classList.add("animate-fadeIn");
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, [patientId, navigate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {},
+  });
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (!patient) return;
     
-    // Create new medical history entry
-    const newEntry: MedicalHistory = {
-      id: (medicalHistories.length + 1).toString(),
+    const date = new Date().toLocaleDateString();
+    const newHistory: MedicalHistory = {
+      id: (Date.now()).toString(),
       patientId: patient.id,
-      date: new Date().toLocaleDateString('en-GB'),
+      date,
       visionData: {
-        rightVision,
-        leftVision,
-        rightCylindricalRefraction: rightCylindrical,
-        leftCylindricalRefraction: leftCylindrical,
-        rightSphericalRefraction: rightSpherical,
-        leftSphericalRefraction: leftSpherical
+        rightVision: data.rightVision || "",
+        leftVision: data.leftVision || "",
+        rightCylindricalRefraction: data.rightCylindricalRefraction || "",
+        leftCylindricalRefraction: data.leftCylindricalRefraction || "",
+        rightSphericalRefraction: data.rightSphericalRefraction || "",
+        leftSphericalRefraction: data.leftSphericalRefraction || ""
       },
       lensesData: {
-        rightGlasses,
-        leftGlasses,
-        pupilDistance,
-        angleOfView,
-        nearPointOfConvergence,
-        depthPerception
+        rightGlasses: data.rightGlasses || "",
+        leftGlasses: data.leftGlasses || "",
+        pupilDistance: data.pupilDistance || "",
+        angleOfView: data.angleOfView || "",
+        nearPointOfConvergence: data.nearPointOfConvergence || "",
+        depthPerception: data.depthPerception || ""
       },
-      treatmentNotes,
-      followupNotes,
-      prescriptionNotes
+      treatmentNotes: data.treatmentNotes || "",
+      followupNotes: data.followupNotes || "",
+      prescriptionNotes: data.prescriptionNotes || ""
     };
     
     // In a real app, you would save this to a database
-    console.log("New medical history entry:", newEntry);
+    // For now we'll just add it to our histories
+    setHistories(prev => [newHistory, ...prev]);
     
     toast({
-      title: "טיפול נשמר בהצלחה",
-      description: `נתוני הטיפול של ${patient.name} נשמרו במערכת`
+      title: "טיפול נרשם בהצלחה",
+      description: "פרטי הטיפול נשמרו בהיסטוריית המטופל",
     });
     
-    navigate("/patients");
+    form.reset();
   };
 
   if (!patient) {
-    return (
-      <MainLayout>
-        <div className="flex justify-center items-center h-[70vh]">
-          <p>טוען...</p>
-        </div>
-      </MainLayout>
-    );
+    return <MainLayout>
+      <div className="flex justify-center items-center h-full">
+        <p>טוען...</p>
+      </div>
+    </MainLayout>;
   }
 
   return (
     <MainLayout>
-      <div className="animate-fadeIn">
-        <div className="flex justify-between items-center mb-8">
-          <Button variant="outline" onClick={() => navigate("/patients")}>
-            <ArrowRight className="ml-2" />
-            חזרה לרשימת מטופלים
-          </Button>
+      <div className="main-content opacity-0">
+        <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">טיפול חדש</h1>
+          <Button variant="outline" onClick={() => navigate("/patients")}>
+            חזרה לרשימת המטופלים
+          </Button>
         </div>
         
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-semibold text-primary">{patient.name}</h2>
-          <p className="text-gray-500">ת.ז: {patient.idNumber} | גיל: {patient.age} | טלפון: {patient.phone}</p>
-        </div>
-        
-        <form onSubmit={handleSubmit}>
-          <Card className="mb-8">
-            <CardHeader className="bg-gray-50">
-              <CardTitle className="text-xl text-center">נתוני ראייה ורפרקציה</CardTitle>
+        <div className="mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>פרטי מטופל: {patient.name}</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="py-3 px-4 text-center text-sm font-medium text-gray-500">שמאל</th>
-                      <th className="py-3 px-4 text-center text-sm font-medium text-gray-500">ימין</th>
-                      <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">בדיקה</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-4 px-4">
-                        <Input value={leftVision} onChange={(e) => setLeftVision(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4">
-                        <Input value={rightVision} onChange={(e) => setRightVision(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">חדות ראייה</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-4 px-4">
-                        <Input value={leftCylindrical} onChange={(e) => setLeftCylindrical(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4">
-                        <Input value={rightCylindrical} onChange={(e) => setRightCylindrical(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">רפרקציה צילינדרית</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-4 px-4">
-                        <Input value={leftSpherical} onChange={(e) => setLeftSpherical(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4">
-                        <Input value={rightSpherical} onChange={(e) => setRightSpherical(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">רפרקציה ספרית</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">תעודת זהות</p>
+                  <p>{patient.idNumber}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">גיל</p>
+                  <p>{patient.age}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">מגדר</p>
+                  <p>{patient.gender}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">טלפון</p>
+                  <p>{patient.phone}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">דוא"ל</p>
+                  <p>{patient.email}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">הערות</p>
+                  <p>{patient.additionalNotes}</p>
+                </div>
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        <Tabs defaultValue="new-treatment">
+          <TabsList className="mb-4">
+            <TabsTrigger value="new-treatment">טיפול חדש</TabsTrigger>
+            <TabsTrigger value="history">היסטוריית טיפולים</TabsTrigger>
+          </TabsList>
           
-          <Card className="mb-8">
-            <CardHeader className="bg-gray-50">
-              <CardTitle className="text-xl text-center">נתוני משקפיים ופזילה</CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="py-3 px-4 text-center text-sm font-medium text-gray-500">שמאל</th>
-                      <th className="py-3 px-4 text-center text-sm font-medium text-gray-500">ימין</th>
-                      <th className="py-3 px-4 text-right text-sm font-medium text-gray-500">בדיקה</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-gray-200">
-                      <td className="py-4 px-4">
-                        <Input value={leftGlasses} onChange={(e) => setLeftGlasses(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4">
-                        <Input value={rightGlasses} onChange={(e) => setRightGlasses(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">משקפיים</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td colSpan={2} className="py-4 px-4">
-                        <Input value={pupilDistance} onChange={(e) => setPupilDistance(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">זווית פזילה</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td colSpan={2} className="py-4 px-4">
-                        <Input value={angleOfView} onChange={(e) => setAngleOfView(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">תנועות עיניים</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td colSpan={2} className="py-4 px-4">
-                        <Input value={depthPerception} onChange={(e) => setDepthPerception(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">ראיית עומק</td>
-                    </tr>
-                    <tr className="border-b border-gray-200">
-                      <td colSpan={2} className="py-4 px-4">
-                        <Input value={nearPointOfConvergence} onChange={(e) => setNearPointOfConvergence(e.target.value)} dir="rtl" />
-                      </td>
-                      <td className="py-4 px-4 text-right font-medium">Near Point of Convergence</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+          <TabsContent value="new-treatment">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>נתוני ראייה</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-center">חדות ראייה</h3>
+                        <FormField
+                          control={form.control}
+                          name="rightVision"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין ימין</FormLabel>
+                              <FormControl>
+                                <Input placeholder="6/6" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="leftVision"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין שמאל</FormLabel>
+                              <FormControl>
+                                <Input placeholder="6/6" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-center">שבירה צילינדרית</h3>
+                        <FormField
+                          control={form.control}
+                          name="rightCylindricalRefraction"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין ימין</FormLabel>
+                              <FormControl>
+                                <Input placeholder="-0.50" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="leftCylindricalRefraction"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין שמאל</FormLabel>
+                              <FormControl>
+                                <Input placeholder="-0.75" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-center">שבירה ספרית</h3>
+                        <FormField
+                          control={form.control}
+                          name="rightSphericalRefraction"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין ימין</FormLabel>
+                              <FormControl>
+                                <Input placeholder="-1.00" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="leftSphericalRefraction"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין שמאל</FormLabel>
+                              <FormControl>
+                                <Input placeholder="-1.25" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>נתוני עדשות</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-center">משקפיים</h3>
+                        <FormField
+                          control={form.control}
+                          name="rightGlasses"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין ימין</FormLabel>
+                              <FormControl>
+                                <Input placeholder="-1.50" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="leftGlasses"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>עין שמאל</FormLabel>
+                              <FormControl>
+                                <Input placeholder="-1.75" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-center">פרמטרים נוספים</h3>
+                        <FormField
+                          control={form.control}
+                          name="pupilDistance"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>מרחק אישונים</FormLabel>
+                              <FormControl>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="בחר אפשרות" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="תקין">תקין</SelectItem>
+                                    <SelectItem value="לא תקין">לא תקין</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="angleOfView"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>זווית מבט</FormLabel>
+                              <FormControl>
+                                <Input placeholder="10°" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-center">מדדים נוספים</h3>
+                        <FormField
+                          control={form.control}
+                          name="nearPointOfConvergence"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>נקודת התכנסות קרובה</FormLabel>
+                              <FormControl>
+                                <Input placeholder="5cm" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="depthPerception"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>תפיסת עומק</FormLabel>
+                              <FormControl>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="בחר אפשרות" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="שכר">שכר</SelectItem>
+                                    <SelectItem value="לא שכר">לא שכר</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>הערות טיפול ומעקב</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="treatmentNotes"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>הערות טיפול</FormLabel>
+                            <FormControl>
+                              <Input placeholder="פרטי הטיפול והמלצות..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="followupNotes"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>הערות למעקב</FormLabel>
+                            <FormControl>
+                              <Input placeholder="פרטים למעקב בעתיד..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="prescriptionNotes"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>מרשם</FormLabel>
+                            <FormControl>
+                              <Input placeholder="פרטי מרשם שניתן..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    <div className="mt-6">
+                      <Button type="submit">שמור טיפול</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </form>
+            </Form>
+          </TabsContent>
           
-          <Card className="mb-8">
-            <CardHeader className="bg-gray-50">
-              <CardTitle className="text-xl text-center">סיכום טיפול</CardTitle>
-            </CardHeader>
-            <CardContent className="p-6">
+          <TabsContent value="history">
+            {histories.length === 0 ? (
+              <Card>
+                <CardContent className="py-8 text-center">
+                  <p>אין היסטוריית טיפולים למטופל זה</p>
+                </CardContent>
+              </Card>
+            ) : (
               <div className="space-y-6">
-                <div>
-                  <Label className="block mb-2 text-right">סיכום טיפול:</Label>
-                  <Textarea 
-                    placeholder="הכנס את סיכום הטיפול כאן..." 
-                    value={treatmentNotes} 
-                    onChange={(e) => setTreatmentNotes(e.target.value)}
-                    className="h-24"
-                    dir="rtl"
-                  />
-                </div>
-                
-                <div>
-                  <Label className="block mb-2 text-right">המלצות לטיפול:</Label>
-                  <Textarea 
-                    placeholder="הכנס את המלצות לטיפול כאן..." 
-                    value={followupNotes} 
-                    onChange={(e) => setFollowupNotes(e.target.value)}
-                    className="h-24"
-                    dir="rtl"
-                  />
-                </div>
-                
-                <div>
-                  <Label className="block mb-2 text-right">המלצות למרשם:</Label>
-                  <Textarea 
-                    placeholder="הכנס את המלצות למרשם כאן..." 
-                    value={prescriptionNotes} 
-                    onChange={(e) => setPrescriptionNotes(e.target.value)}
-                    className="h-24"
-                    dir="rtl"
-                  />
-                </div>
+                {histories.map((history, index) => (
+                  <Card key={history.id}>
+                    <CardHeader>
+                      <CardTitle>טיפול מתאריך {history.date}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-6">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">נתוני ראייה</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">חדות ראייה</p>
+                              <p>ימין: {history.visionData.rightVision}</p>
+                              <p>שמאל: {history.visionData.leftVision}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">שבירה צילינדרית</p>
+                              <p>ימין: {history.visionData.rightCylindricalRefraction}</p>
+                              <p>שמאל: {history.visionData.leftCylindricalRefraction}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">שבירה ספרית</p>
+                              <p>ימין: {history.visionData.rightSphericalRefraction}</p>
+                              <p>שמאל: {history.visionData.leftSphericalRefraction}</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <Separator />
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">נתוני עדשות</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">משקפיים</p>
+                              <p>ימין: {history.lensesData.rightGlasses}</p>
+                              <p>שמאל: {history.lensesData.leftGlasses}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">פרמטרים נוספים</p>
+                              <p>מרחק אישונים: {history.lensesData.pupilDistance}</p>
+                              <p>זווית מבט: {history.lensesData.angleOfView}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">מדדים נוספים</p>
+                              <p>נק' התכנסות: {history.lensesData.nearPointOfConvergence}</p>
+                              <p>תפיסת עומק: {history.lensesData.depthPerception}</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <Separator />
+                        
+                        <div>
+                          <h3 className="text-lg font-semibold mb-4">הערות</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">הערות טיפול</p>
+                              <p>{history.treatmentNotes}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">הערות למעקב</p>
+                              <p>{history.followupNotes}</p>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-muted-foreground">מרשם</p>
+                              <p>{history.prescriptionNotes}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-            </CardContent>
-            <CardFooter className="bg-gray-50 flex justify-center p-4">
-              <Button type="submit" className="w-32">שמור</Button>
-            </CardFooter>
-          </Card>
-        </form>
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
     </MainLayout>
   );
