@@ -49,7 +49,7 @@ export function PatientForm({
       phone: initialValues?.phone || "",
       email: initialValues?.email || "",
       age: initialValues?.age || 0,
-      gender: initialValues?.gender || "זכר",
+      gender: (initialValues?.gender as "זכר" | "נקבה" | "אחר") || "זכר",
       additionalNotes: initialValues?.additionalNotes || "",
     },
   });
