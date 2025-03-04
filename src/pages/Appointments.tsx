@@ -1,4 +1,3 @@
-
 import { MainLayout } from "@/layouts/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { appointments as initialAppointments } from "@/data/mockData";
@@ -16,7 +15,6 @@ const Appointments = () => {
     setAppointments(prevAppointments => [...prevAppointments, newAppointment]);
   };
   
-  // Filter appointments to only show future appointments or completed ones
   const validAppointments = appointments.filter(appointment => {
     const appointmentDate = parseISO(appointment.date);
     return appointment.status === "completed" || !isBefore(appointmentDate, startOfDay(new Date()));
