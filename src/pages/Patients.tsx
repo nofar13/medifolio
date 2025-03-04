@@ -8,7 +8,7 @@ const Patients = () => {
   return (
     <MainLayout>
       <PageAnimation>
-        <PatientsList initialPatients={patients} />
+        <PatientsList initialPatients={patients} medicalHistories={medicalHistories} />
       </PageAnimation>
     </MainLayout>
   );

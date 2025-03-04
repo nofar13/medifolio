@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Patient } from "@/types";
+import { Patient, MedicalHistory } from "@/types";
 import { Button } from "@/components/ui/button";
 import { UserPlus, Search, Eye, Edit, Trash2 } from "lucide-react";
 import { PatientForm } from "@/components/Patients/PatientForm";
@@ -10,13 +10,13 @@ import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { medicalHistories } from "@/data/mockData";
 
 interface PatientsListProps {
   initialPatients: Patient[];
+  medicalHistories: MedicalHistory[];
 }
 
-export const PatientsList = ({ initialPatients }: PatientsListProps) => {
+export const PatientsList = ({ initialPatients, medicalHistories }: PatientsListProps) => {
   const [allPatients, setAllPatients] = useState<Patient[]>(initialPatients);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -175,6 +175,7 @@ export const PatientsList = ({ initialPatients }: PatientsListProps) => {
           {selectedPatient ? (
             <PatientHistory 
               history={selectedPatient.medicalHistory || []} 
+              patientName={selectedPatient.name}
             />
           ) : (
             <div className="text-center py-12">

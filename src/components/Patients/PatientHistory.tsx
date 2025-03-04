@@ -5,13 +5,14 @@ import { MedicalHistory } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Eye, ChevronDown, ChevronUp } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface PatientHistoryProps {
   history: MedicalHistory[];
+  patientName?: string;
 }
 
-export function PatientHistory({ history }: PatientHistoryProps) {
+export function PatientHistory({ history, patientName }: PatientHistoryProps) {
   const [visibleItems, setVisibleItems] = useState<string[]>([]);
   const [selectedRecord, setSelectedRecord] = useState<MedicalHistory | null>(null);
 
@@ -26,7 +27,7 @@ export function PatientHistory({ history }: PatientHistoryProps) {
   if (history.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 font-medium">אין היסטוריה רפואית למטופל זה</p>
+        <p className="text-gray-500 font-medium">אין היסטוריה רפואית {patientName ? `ל${patientName}` : "למטופל זה"}</p>
         <p className="text-gray-400 text-sm mt-1">הוסף בדיקה חדשה כדי להתחיל</p>
       </div>
     );
@@ -34,10 +35,12 @@ export function PatientHistory({ history }: PatientHistoryProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-right">היסטוריית מטופל</h2>
+      <h2 className="text-xl font-semibold text-right">
+        היסטוריית מטופל {patientName && `- ${patientName}`}
+      </h2>
       
       {history.map((record) => (
-        <Card key={record.id} className="overflow-hidden hover-lift">
+        <Card key={record.id} className="overflow-hidden hover:shadow-md transition-shadow">
           <div 
             onClick={() => toggleVisibility(record.id)}
             className="flex justify-between items-center p-4 cursor-pointer bg-gray-50"
