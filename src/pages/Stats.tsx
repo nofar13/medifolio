@@ -8,12 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TrendingUp, Users, BarChart2, PieChart as PieChartIcon } from "lucide-react";
+import { TrendingUp, Users, BarChart2, PieChart as PieChartIcon, Clock } from "lucide-react";
 import {
   monthlyPatientsData,
   patientDistributionData,
-  patientWaitTimeData,
-  patientDistributionOverTime
+  patientWaitTimeData
 } from "@/data/mockData";
 import { 
   BarChart, 
@@ -28,7 +27,9 @@ import {
   YAxis, 
   CartesianGrid, 
   LineChart, 
-  Line 
+  Line, 
+  AreaChart,
+  Area
 } from "recharts";
 
 const Stats = () => {
@@ -105,18 +106,41 @@ const Stats = () => {
           </LineChart>
         </ResponsiveContainer>
       );
+    } else if (type === "area") {
+      return (
+        <ResponsiveContainer width="100%" height={height}>
+          <AreaChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey={xAxis} />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Area type="monotone" dataKey="minutes" fill="#8884d8" stroke="#8884d8" name="זמן שהייה (דקות)" />
+          </AreaChart>
+        </ResponsiveContainer>
+      );
     }
     return null;
   };
 
-  // Create more realistic eye clinic patient data
+  // Create more realistic eye clinic patient data from September to February
   const realisticPatientData = [
-    { month: "ינואר", patients: 120 },
-    { month: "פברואר", patients: 135 },
-    { month: "מרץ", patients: 128 },
-    { month: "אפריל", patients: 142 },
-    { month: "מאי", patients: 150 },
-    { month: "יוני", patients: 145 }
+    { month: "ספטמבר", patients: 280 },
+    { month: "אוקטובר", patients: 310 },
+    { month: "נובמבר", patients: 295 },
+    { month: "דצמבר", patients: 270 },
+    { month: "ינואר", patients: 320 },
+    { month: "פברואר", patients: 305 }
+  ];
+
+  // Revenue data from September to February
+  const updatedMonthlyRevenueData = [
+    { month: "ספטמבר", patients: 45000 },
+    { month: "אוקטובר", patients: 52000 },
+    { month: "נובמבר", patients: 48000 },
+    { month: "דצמבר", patients: 60000 },
+    { month: "ינואר", patients: 65000 },
+    { month: "פברואר", patients: 58000 }
   ];
 
   return (
@@ -139,7 +163,7 @@ const Stats = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {renderChart("bar", monthlyPatientsData, "month", "patients", 300, ["#8884d8"])}
+              {renderChart("bar", updatedMonthlyRevenueData, "month", "patients", 300, ["#8884d8"])}
             </CardContent>
           </Card>
 
@@ -178,15 +202,15 @@ const Stats = () => {
           <Card>
             <CardHeader>
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <BarChart2 className="h-5 w-5 text-muted-foreground" />
-                <CardTitle>התפלגות מטופלים לאורך זמן</CardTitle>
+                <Clock className="h-5 w-5 text-muted-foreground" />
+                <CardTitle>זמן שהיית מטופל</CardTitle>
               </div>
               <CardDescription>
-                מטופלים חדשים וחוזרים לאורך 6 חודשים
+                זמן ממוצע של שהיית מטופל בדקות
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {renderChart("line", patientDistributionOverTime, "month", ["newPatients", "returningPatients"], 300, ["#82ca9d", "#8884d8"])}
+              {renderChart("area", patientWaitTimeData, "name", "minutes", 300, ["#82ca9d", "#8884d8"])}
             </CardContent>
           </Card>
         </div>
