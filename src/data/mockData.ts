@@ -145,6 +145,16 @@ export const patientWaitTimeData = [
   { name: "ינואר", minutes: 22 },
 ];
 
+// Add the missing patientsByDoctorData
+export const patientsByDoctorData = [
+  { name: "ינואר", patients: 120 },
+  { name: "פברואר", patients: 150 },
+  { name: "מרץ", patients: 140 },
+  { name: "אפריל", patients: 160 },
+  { name: "מאי", patients: 180 },
+  { name: "יוני", patients: 190 }
+];
+
 export const appointments: Appointment[] = [
   {
     id: "1",
