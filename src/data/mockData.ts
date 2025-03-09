@@ -1,3 +1,4 @@
+
 import { Patient, MedicalHistory, ChartData, PatientDistribution, Appointment } from "@/types";
 import { addDays, format, subDays } from "date-fns";
 
@@ -135,12 +136,12 @@ export const patientDistributionData: PatientDistribution[] = [
   { name: "מטופלים חוזרים", value: 60 }
 ];
 
-// Modified wait time data with consistent 22 minute average
+// Modified wait time data with varying times around 22 minutes
 export const patientWaitTimeData = [
-  { name: "ספטמבר", minutes: 22 },
-  { name: "אוקטובר", minutes: 22 },
-  { name: "נובמבר", minutes: 22 },
-  { name: "דצמבר", minutes: 22 },
+  { name: "ספטמבר", minutes: 21 },
+  { name: "אוקטובר", minutes: 24 },
+  { name: "נובמבר", minutes: 20 },
+  { name: "דצמבר", minutes: 23 },
   { name: "ינואר", minutes: 22 },
 ];
 
