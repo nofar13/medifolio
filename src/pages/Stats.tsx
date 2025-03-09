@@ -27,7 +27,8 @@ import {
   YAxis, 
   CartesianGrid, 
   LineChart, 
-  Line
+  Line,
+  ReferenceLine
 } from "recharts";
 
 const Stats = () => {
@@ -84,12 +85,13 @@ const Stats = () => {
     } else if (type === "line") {
       return (
         <ResponsiveContainer width="100%" height={height}>
-          <LineChart data={data}>
+          <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey={xAxis} />
-            <YAxis />
+            <YAxis domain={[0, 'dataMax + 10']} />
             <Tooltip />
             <Legend />
+            <ReferenceLine y={22} stroke="#ff7300" strokeDasharray="3 3" label={{ value: 'ממוצע: 22 דקות', position: 'top', fill: '#ff7300' }} />
             {Array.isArray(yAxis) ? (
               yAxis.map((key, index) => (
                 <Line 
@@ -106,6 +108,7 @@ const Stats = () => {
                 dataKey={yAxis} 
                 stroke={colors[0]} 
                 name="זמן שהייה (דקות)" 
+                strokeWidth={2}
               />
             )}
           </LineChart>
