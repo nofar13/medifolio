@@ -123,12 +123,12 @@ export const medicalHistories: MedicalHistory[] = [
 ];
 
 export const monthlyPatientsData: ChartData[] = [
-  { month: "ינואר", patients: 8000 },
-  { month: "פברואר", patients: 12000 },
-  { month: "מרץ", patients: 10000 },
-  { month: "אפריל", patients: 15000 },
-  { month: "מאי", patients: 13000 },
-  { month: "יוני", patients: 17000 }
+  { month: "ינואר", patients: 28000 },
+  { month: "פברואר", patients: 32000 },
+  { month: "מרץ", patients: 30000 },
+  { month: "אפריל", patients: 45000 },
+  { month: "מאי", patients: 43000 },
+  { month: "יוני", patients: 57000 }
 ];
 
 export const patientDistributionData: PatientDistribution[] = [
