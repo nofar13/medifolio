@@ -109,6 +109,16 @@ const Stats = () => {
     return null;
   };
 
+  // Create more realistic eye clinic patient data
+  const realisticPatientData = [
+    { month: "ינואר", patients: 120 },
+    { month: "פברואר", patients: 135 },
+    { month: "מרץ", patients: 128 },
+    { month: "אפריל", patients: 142 },
+    { month: "מאי", patients: 150 },
+    { month: "יוני", patients: 145 }
+  ];
+
   return (
     <MainLayout>
       <div className="main-content opacity-0">
@@ -161,7 +171,7 @@ const Stats = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {renderChart("bar", monthlyPatientsData, "month", "patients", 300, ["#8884d8"])}
+              {renderChart("bar", realisticPatientData, "month", "patients", 300, ["#82ca9d"])}
             </CardContent>
           </Card>
 
