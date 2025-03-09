@@ -135,25 +135,13 @@ export const patientDistributionData: PatientDistribution[] = [
   { name: "מטופלים חוזרים", value: 60 }
 ];
 
-export const patientsByDoctorData = [
-  { name: "ד״ר אברהם", patients: 180 },
-  { name: "ד״ר אוקטובר", patients: 340 },
-  { name: "ד״ר אוגוסט", patients: 280 },
-  { name: "ד״ר יוני", patients: 340 },
-  { name: "ד״ר אפריל", patients: 290 },
-  { name: "ד״ר פברואר", patients: 290 },
-  { name: "ד״ר ינואר", patients: 220 }
-];
-
+// Modified wait time data with consistent 22 minute average
 export const patientWaitTimeData = [
-  { name: "ד״ר ינואר", minutes: 40 },
-  { name: "ד״ר פברואר", minutes: 42 },
-  { name: "ד״ר אוקטובר", minutes: 39 },
-  { name: "ד״ר אוגוסט", minutes: 41 },
-  { name: "ד״ר יוני", minutes: 30 },
-  { name: "ד״ר אפריל", minutes: 25 },
-  { name: "ד״ר פברואר", minutes: 22 },
-  { name: "ד״ר ינואר", minutes: 19 }
+  { name: "ספטמבר", minutes: 22 },
+  { name: "אוקטובר", minutes: 22 },
+  { name: "נובמבר", minutes: 22 },
+  { name: "דצמבר", minutes: 22 },
+  { name: "ינואר", minutes: 22 },
 ];
 
 export const appointments: Appointment[] = [

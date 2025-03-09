@@ -24,10 +24,24 @@ const Index = () => {
       <div className="main-content opacity-0">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="flex items-center">
-            <div className="p-3 bg-subtle-blue rounded-lg mr-4 shadow-sm">
-              <Eye className="h-8 w-8 text-subtle-blue" />
+            {/* Logo */}
+            <div className="flex items-center">
+              <div className="p-2 bg-subtle-blue rounded-lg mr-3 shadow-sm">
+                <img 
+                  src="/yunina-logo.png" 
+                  alt="Yunina Logo" 
+                  className="h-10 w-10 object-contain"
+                  onError={(e) => {
+                    // Fallback in case the logo image is not available
+                    e.currentTarget.style.display = 'none'; 
+                    const fallbackIcon = document.getElementById('fallback-icon');
+                    if (fallbackIcon) fallbackIcon.style.display = 'block';
+                  }}
+                />
+                <Eye id="fallback-icon" className="h-8 w-8 text-subtle-blue hidden" />
+              </div>
+              <h1 className="text-3xl font-bold text-gray-700 tracking-tight">מרפאת יונינה - ניהול מרפאת עיניים</h1>
             </div>
-            <h1 className="text-3xl font-bold text-gray-700 tracking-tight">מרפאת יונינה - ניהול מרפאת עיניים</h1>
           </div>
         </div>
 
@@ -52,7 +66,7 @@ const Index = () => {
                 <Calendar className="h-8 w-8 text-subtle-blue" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-700 mb-1">תורים מחר</h3>
+                <h3 className="text-xl font-bold text-gray-700 mb-1">תורים למחר</h3>
                 <p className="text-muted-foreground font-medium">דחוף 1, רגילים 7</p>
               </div>
             </CardContent>
