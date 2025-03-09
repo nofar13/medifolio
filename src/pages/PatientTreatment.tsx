@@ -28,6 +28,7 @@ import { toast } from "@/hooks/use-toast";
 import { medicalHistories, patients } from "@/data/mockData";
 import { MedicalHistory, Patient } from "@/types";
 import { FilePlus, Eye } from "lucide-react";
+import { TreatmentChecklist, ChecklistItem } from "@/components/Patients/TreatmentChecklist";
 
 const formSchema = z.object({
   rightVision: z.string().optional(),
@@ -52,6 +53,7 @@ const PatientTreatment = () => {
   const navigate = useNavigate();
   const [patient, setPatient] = useState<Patient | undefined>();
   const [histories, setHistories] = useState<MedicalHistory[]>([]);
+  const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
 
   useEffect(() => {
     if (patientId) {
@@ -91,8 +93,22 @@ const PatientTreatment = () => {
     defaultValues: {},
   });
 
+  const handleChecklistChange = (items: ChecklistItem[]) => {
+    setChecklist(items);
+  };
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (!patient) return;
+    
+    const checklistSummary = checklist.map(item => {
+      const itemText = item.itemId;
+      const status = item.status === "done" 
+        ? "בוצע" 
+        : item.status === "not-done" 
+          ? "לא בוצע" 
+          : "לא רלוונטי";
+      return `${itemText}: ${status}`;
+    }).join(", ");
     
     const date = new Date().toLocaleDateString();
     const newHistory: MedicalHistory = {
@@ -115,7 +131,7 @@ const PatientTreatment = () => {
         nearPointOfConvergence: data.nearPointOfConvergence || "",
         depthPerception: data.depthPerception || ""
       },
-      treatmentNotes: data.treatmentNotes || "",
+      treatmentNotes: `${data.treatmentNotes || ""} (רשימת בדיקות: ${checklistSummary})`,
       followupNotes: data.followupNotes || "",
       prescriptionNotes: data.prescriptionNotes || ""
     };
@@ -203,6 +219,8 @@ const PatientTreatment = () => {
           <TabsContent value="new-treatment">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <TreatmentChecklist onChange={handleChecklistChange} />
+                
                 <Card>
                   <CardHeader>
                     <CardTitle>נתוני ראייה</CardTitle>

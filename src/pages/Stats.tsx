@@ -8,13 +8,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TrendingUp, Users, BarChart2 } from "lucide-react";
+import { TrendingUp, Users, BarChart2, PieChart as PieChartIcon } from "lucide-react";
 import {
   monthlyPatientsData,
   patientDistributionData,
   patientWaitTimeData,
+  patientDistributionOverTime
 } from "@/data/mockData";
-import { BarChart, PieChart, ResponsiveContainer, Bar, Pie, Cell, Tooltip, Legend, XAxis, YAxis, CartesianGrid } from "recharts";
+import { 
+  BarChart, 
+  PieChart, 
+  ResponsiveContainer, 
+  Bar, 
+  Pie, 
+  Cell, 
+  Tooltip, 
+  Legend, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  LineChart, 
+  Line 
+} from "recharts";
 
 const Stats = () => {
   useEffect(() => {
@@ -67,6 +82,29 @@ const Stats = () => {
           </PieChart>
         </ResponsiveContainer>
       );
+    } else if (type === "line") {
+      return (
+        <ResponsiveContainer width="100%" height={height}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey={xAxis} />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {Object.keys(data[0])
+              .filter(key => key !== xAxis)
+              .map((key, index) => (
+                <Line 
+                  key={key} 
+                  type="monotone" 
+                  dataKey={key} 
+                  stroke={colors[index % colors.length]} 
+                  name={key === "newPatients" ? "מטופלים חדשים" : "מטופלים חוזרים"}
+                />
+              ))}
+          </LineChart>
+        </ResponsiveContainer>
+      );
     }
     return null;
   };
@@ -98,7 +136,7 @@ const Stats = () => {
           <Card>
             <CardHeader>
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <Users className="h-5 w-5 text-muted-foreground" />
+                <PieChartIcon className="h-5 w-5 text-muted-foreground" />
                 <CardTitle>התפלגות מטופלים</CardTitle>
               </div>
               <CardDescription>
@@ -131,14 +169,14 @@ const Stats = () => {
             <CardHeader>
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
                 <BarChart2 className="h-5 w-5 text-muted-foreground" />
-                <CardTitle>זמן שהיית מטופל</CardTitle>
+                <CardTitle>התפלגות מטופלים לאורך זמן</CardTitle>
               </div>
               <CardDescription>
-                זמן שהייה ממוצע של מטופל (בדקות)
+                מטופלים חדשים וחוזרים לאורך 6 חודשים
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {renderChart("bar", patientWaitTimeData, "name", "minutes", 300, ["#82ca9d"])}
+              {renderChart("line", patientDistributionOverTime, "month", ["newPatients", "returningPatients"], 300, ["#82ca9d", "#8884d8"])}
             </CardContent>
           </Card>
         </div>

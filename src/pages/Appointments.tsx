@@ -7,10 +7,19 @@ import { useState } from "react";
 import { Appointment } from "@/types";
 import AddAppointmentForm from "@/components/Appointments/AddAppointmentForm";
 import { isBefore, parseISO, startOfDay } from "date-fns";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Appointments = () => {
   const [filter, setFilter] = useState<"all" | "scheduled" | "completed">("all");
   const [appointments, setAppointments] = useState<Appointment[]>(initialAppointments);
+  const [columnFilter, setColumnFilter] = useState<string>("none");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const handleAppointmentAdded = (newAppointment: Appointment) => {
     setAppointments(prevAppointments => [...prevAppointments, newAppointment]);
@@ -21,6 +30,37 @@ const Appointments = () => {
     return appointment.status === filter;
   });
 
+  const sortedAppointments = [...filteredAppointments].sort((a, b) => {
+    if (columnFilter === "none") return 0;
+    
+    let valueA, valueB;
+    
+    switch (columnFilter) {
+      case "patientName":
+        valueA = a.patientName;
+        valueB = b.patientName;
+        break;
+      case "date":
+        valueA = a.date;
+        valueB = b.date;
+        break;
+      case "time":
+        valueA = a.time;
+        valueB = b.time;
+        break;
+      default:
+        return 0;
+    }
+    
+    if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
+    if (valueA > valueB) return sortDirection === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  const toggleSortDirection = () => {
+    setSortDirection(prev => prev === "asc" ? "desc" : "asc");
+  };
+
   return (
     <MainLayout>
       <div className="animate-fadeIn">
@@ -29,28 +69,58 @@ const Appointments = () => {
           <AddAppointmentForm onAppointmentAdded={handleAppointmentAdded} />
         </div>
         
-        <div className="flex justify-end mb-4 space-x-2 rtl:space-x-reverse">
-          <Button 
-            variant={filter === "all" ? "default" : "outline"}
-            onClick={() => setFilter("all")}
-            className={filter === "all" ? "bg-blue-600 hover:bg-blue-700" : ""}
-          >
-            הכל
-          </Button>
-          <Button 
-            variant={filter === "scheduled" ? "default" : "outline"}
-            onClick={() => setFilter("scheduled")}
-            className={filter === "scheduled" ? "bg-blue-600 hover:bg-blue-700" : ""}
-          >
-            מתוכננות
-          </Button>
-          <Button 
-            variant={filter === "completed" ? "default" : "outline"}
-            onClick={() => setFilter("completed")}
-            className={filter === "completed" ? "bg-blue-600 hover:bg-blue-700" : ""}
-          >
-            הושלמו
-          </Button>
+        <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
+          <div className="flex space-x-2 rtl:space-x-reverse">
+            <Button 
+              variant={filter === "all" ? "default" : "outline"}
+              onClick={() => setFilter("all")}
+              className={filter === "all" ? "bg-blue-600 hover:bg-blue-700" : ""}
+            >
+              הכל
+            </Button>
+            <Button 
+              variant={filter === "scheduled" ? "default" : "outline"}
+              onClick={() => setFilter("scheduled")}
+              className={filter === "scheduled" ? "bg-blue-600 hover:bg-blue-700" : ""}
+            >
+              מתוכננות
+            </Button>
+            <Button 
+              variant={filter === "completed" ? "default" : "outline"}
+              onClick={() => setFilter("completed")}
+              className={filter === "completed" ? "bg-blue-600 hover:bg-blue-700" : ""}
+            >
+              הושלמו
+            </Button>
+          </div>
+          
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <div className="flex items-center">
+              <span className="text-sm ml-2">מיון לפי:</span>
+              <Select value={columnFilter} onValueChange={setColumnFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="בחר עמודה למיון" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">ללא מיון</SelectItem>
+                  <SelectItem value="patientName">שם מטופל</SelectItem>
+                  <SelectItem value="date">תאריך</SelectItem>
+                  <SelectItem value="time">שעה</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            {columnFilter !== "none" && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={toggleSortDirection}
+                className="flex items-center"
+              >
+                {sortDirection === "asc" ? "עולה ↑" : "יורד ↓"}
+              </Button>
+            )}
+          </div>
         </div>
         
         <Card>
@@ -72,8 +142,8 @@ const Appointments = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredAppointments.length > 0 ? (
-                    filteredAppointments.map((appointment) => (
+                  {sortedAppointments.length > 0 ? (
+                    sortedAppointments.map((appointment) => (
                       <tr key={appointment.id} className="border-b border-gray-200 hover:bg-gray-50">
                         <td className="py-4 px-4">
                           <div className="flex space-x-2 rtl:space-x-reverse">

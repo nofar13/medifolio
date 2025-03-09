@@ -214,12 +214,12 @@ export const medicalHistories: MedicalHistory[] = [
 ];
 
 export const monthlyPatientsData: ChartData[] = [
-  { month: "ינואר", patients: 28000 },
-  { month: "פברואר", patients: 32000 },
-  { month: "מרץ", patients: 30000 },
-  { month: "אפריל", patients: 45000 },
-  { month: "מאי", patients: 43000 },
-  { month: "יוני", patients: 57000 }
+  { month: "ינואר", patients: 45000 },
+  { month: "פברואר", patients: 52000 },
+  { month: "מרץ", patients: 48000 },
+  { month: "אפריל", patients: 60000 },
+  { month: "מאי", patients: 65000 },
+  { month: "יוני", patients: 70000 }
 ];
 
 export const patientDistributionData: PatientDistribution[] = [
@@ -227,7 +227,6 @@ export const patientDistributionData: PatientDistribution[] = [
   { name: "מטופלים חוזרים", value: 60 }
 ];
 
-// Modified wait time data with varying times around 22 minutes
 export const patientWaitTimeData = [
   { name: "ספטמבר", minutes: 21 },
   { name: "אוקטובר", minutes: 24 },
@@ -236,7 +235,6 @@ export const patientWaitTimeData = [
   { name: "ינואר", minutes: 22 },
 ];
 
-// Add the missing patientsByDoctorData
 export const patientsByDoctorData = [
   { name: "ינואר", patients: 120 },
   { name: "פברואר", patients: 150 },
@@ -310,4 +308,20 @@ export const appointments: Appointment[] = [
     status: "scheduled",
     notes: "בדיקה תקופתית"
   }
+];
+
+export const patientDistributionOverTime = [
+  { month: "ינואר", newPatients: 15, returningPatients: 30 },
+  { month: "פברואר", newPatients: 18, returningPatients: 34 },
+  { month: "מרץ", newPatients: 20, returningPatients: 28 },
+  { month: "אפריל", newPatients: 25, returningPatients: 35 },
+  { month: "מאי", newPatients: 22, returningPatients: 43 },
+  { month: "יוני", newPatients: 28, returningPatients: 42 }
+];
+
+export const treatmentChecklistItems = [
+  { id: "1", text: "בדיקת לחץ תוך-עיני" },
+  { id: "2", text: "בדיקת קרקעית העין" },
+  { id: "3", text: "מדידת חדות ראייה" },
+  { id: "4", text: "התאמת משקפיים/עדשות" }
 ];
