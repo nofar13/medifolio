@@ -1,4 +1,3 @@
-
 import { Patient, MedicalHistory, ChartData, PatientDistribution, Appointment } from "@/types";
 import { addDays, format, subDays } from "date-fns";
 
@@ -43,6 +42,50 @@ export const patients: Patient[] = [
     age: 28,
     gender: "זכר",
     additionalNotes: "אחרי ניתוח לייזר בשנת 2020",
+    medicalHistory: []
+  },
+  {
+    id: "4",
+    idNumber: "309876543",
+    name: "רחל גולדמן",
+    phone: "053-9876543",
+    email: "rachel@example.com",
+    age: 56,
+    gender: "נקבה",
+    additionalNotes: "סובלת מיובש בעיניים",
+    medicalHistory: []
+  },
+  {
+    id: "5",
+    idNumber: "208765432",
+    name: "משה אברהם",
+    phone: "050-8765432",
+    email: "moshe@example.com",
+    age: 62,
+    gender: "זכר",
+    additionalNotes: "התחלת קטרקט בעין ימין",
+    medicalHistory: []
+  },
+  {
+    id: "6",
+    idNumber: "405678901",
+    name: "נועה שטיין",
+    phone: "055-6789012",
+    email: "noa@example.com",
+    age: 25,
+    gender: "נקבה",
+    additionalNotes: "מיופיה גבוהה",
+    medicalHistory: []
+  },
+  {
+    id: "7",
+    idNumber: "506789012",
+    name: "אלי מזרחי",
+    phone: "058-7890123",
+    email: "eli@example.com",
+    age: 47,
+    gender: "זכר",
+    additionalNotes: "אסטיגמטיזם",
     medicalHistory: []
   }
 ];
@@ -119,6 +162,54 @@ export const medicalHistories: MedicalHistory[] = [
     treatmentNotes: "התקדמות חיובית, שיפור קל בראייה",
     followupNotes: "ביקורת בעוד שנה",
     prescriptionNotes: "אין צורך במרשם חדש"
+  },
+  {
+    id: "4",
+    patientId: "4",
+    date: "10/01/2024",
+    visionData: {
+      rightVision: "6/12",
+      leftVision: "6/12",
+      rightCylindricalRefraction: "1.00-",
+      leftCylindricalRefraction: "1.00-",
+      rightSphericalRefraction: "2.00-",
+      leftSphericalRefraction: "2.25-"
+    },
+    lensesData: {
+      rightGlasses: "2.50-",
+      leftGlasses: "2.75-",
+      pupilDistance: "תקין",
+      angleOfView: "12°",
+      nearPointOfConvergence: "8cm",
+      depthPerception: "תקין"
+    },
+    treatmentNotes: "טיפות עיניים לטיפול ביובש",
+    followupNotes: "ביקורת בעוד 3 חודשים",
+    prescriptionNotes: "מרשם לטיפות עיניים"
+  },
+  {
+    id: "5",
+    patientId: "5",
+    date: "15/01/2024",
+    visionData: {
+      rightVision: "6/15",
+      leftVision: "6/9",
+      rightCylindricalRefraction: "0.50-",
+      leftCylindricalRefraction: "0.25-",
+      rightSphericalRefraction: "1.50-",
+      leftSphericalRefraction: "1.00-"
+    },
+    lensesData: {
+      rightGlasses: "1.75-",
+      leftGlasses: "1.25-",
+      pupilDistance: "תקין",
+      angleOfView: "9°",
+      nearPointOfConvergence: "7cm",
+      depthPerception: "תקין"
+    },
+    treatmentNotes: "המלצה למעקב אחר התפתחות הקטרקט",
+    followupNotes: "ביקורת בעוד 4 חודשים",
+    prescriptionNotes: "מרשם למשקפיים מעודכן"
   }
 ];
 
@@ -191,5 +282,32 @@ export const appointments: Appointment[] = [
     time: "11:30",
     status: "completed",
     notes: "בדיקת לחץ תוך-עיני"
+  },
+  {
+    id: "5",
+    patientId: "5",
+    patientName: "משה אברהם",
+    date: tomorrow,
+    time: "13:15",
+    status: "scheduled",
+    notes: "בדיקת מעקב קטרקט"
+  },
+  {
+    id: "6",
+    patientId: "6",
+    patientName: "נועה שטיין",
+    date: dayAfterTomorrow,
+    time: "15:30",
+    status: "scheduled",
+    notes: "התאמת משקפיים חדשים"
+  },
+  {
+    id: "7",
+    patientId: "7",
+    patientName: "אלי מזרחי",
+    date: threeDaysFromNow,
+    time: "09:45",
+    status: "scheduled",
+    notes: "בדיקה תקופתית"
   }
 ];
