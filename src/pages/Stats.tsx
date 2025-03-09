@@ -27,9 +27,7 @@ import {
   YAxis, 
   CartesianGrid, 
   LineChart, 
-  Line, 
-  AreaChart,
-  Area
+  Line
 } from "recharts";
 
 const Stats = () => {
@@ -92,9 +90,8 @@ const Stats = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            {Object.keys(data[0])
-              .filter(key => key !== xAxis)
-              .map((key, index) => (
+            {Array.isArray(yAxis) ? (
+              yAxis.map((key, index) => (
                 <Line 
                   key={key} 
                   type="monotone" 
@@ -102,21 +99,16 @@ const Stats = () => {
                   stroke={colors[index % colors.length]} 
                   name={key === "newPatients" ? "מטופלים חדשים" : "מטופלים חוזרים"}
                 />
-              ))}
+              ))
+            ) : (
+              <Line 
+                type="monotone" 
+                dataKey={yAxis} 
+                stroke={colors[0]} 
+                name="זמן שהייה (דקות)" 
+              />
+            )}
           </LineChart>
-        </ResponsiveContainer>
-      );
-    } else if (type === "area") {
-      return (
-        <ResponsiveContainer width="100%" height={height}>
-          <AreaChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey={xAxis} />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Area type="monotone" dataKey="minutes" fill="#8884d8" stroke="#8884d8" name="זמן שהייה (דקות)" />
-          </AreaChart>
         </ResponsiveContainer>
       );
     }
@@ -210,7 +202,7 @@ const Stats = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {renderChart("area", patientWaitTimeData, "name", "minutes", 300, ["#82ca9d", "#8884d8"])}
+              {renderChart("line", patientWaitTimeData, "name", "minutes", 300, ["#8884d8"])}
             </CardContent>
           </Card>
         </div>
