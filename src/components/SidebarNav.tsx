@@ -36,14 +36,40 @@ export function SidebarNav({ isOpen, onToggle }: SidebarNavProps) {
         {isOpen ? (
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <div className="p-1.5 bg-primary/10 rounded-md">
-              <Eye className="h-6 w-6 text-primary" />
+              <img 
+                src="/lovable-uploads/1d5ca128-257d-4f8a-8e16-2d2a77167024.png" 
+                alt="Yunina Logo" 
+                className="h-6 w-auto"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fallbackElement = e.currentTarget.parentElement;
+                  if (fallbackElement) {
+                    const icon = document.createElement('div');
+                    icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+                    fallbackElement.appendChild(icon);
+                  }
+                }}
+              />
             </div>
             <span className="font-semibold text-gray-900">מרפאת יונינה</span>
           </Link>
         ) : (
           <Link to="/" className="w-full flex justify-center">
             <div className="p-1.5 bg-primary/10 rounded-md">
-              <Eye className="h-6 w-6 text-primary" />
+              <img 
+                src="/lovable-uploads/1d5ca128-257d-4f8a-8e16-2d2a77167024.png" 
+                alt="Yunina Logo" 
+                className="h-6 w-auto"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fallbackElement = e.currentTarget.parentElement;
+                  if (fallbackElement) {
+                    const eyeIcon = document.createElement('div');
+                    eyeIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+                    fallbackElement.appendChild(eyeIcon);
+                  }
+                }}
+              />
             </div>
           </Link>
         )}

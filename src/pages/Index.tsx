@@ -28,9 +28,9 @@ const Index = () => {
             <div className="flex items-center">
               <div className="p-2 bg-subtle-blue rounded-lg mr-3 shadow-sm">
                 <img 
-                  src="/yunina-logo.png" 
+                  src="/lovable-uploads/1d5ca128-257d-4f8a-8e16-2d2a77167024.png"
                   alt="Yunina Logo" 
-                  className="h-10 w-10 object-contain"
+                  className="h-10 w-auto object-contain"
                   onError={(e) => {
                     // Fallback in case the logo image is not available
                     e.currentTarget.style.display = 'none'; 
