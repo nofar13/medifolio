@@ -12,6 +12,7 @@ interface SlideProps {
   totalSlides: number;
   onNext: () => void;
   onPrev: () => void;
+  background?: string;
 }
 
 const Slide = ({ 
@@ -21,9 +22,14 @@ const Slide = ({
   slideIndex, 
   totalSlides, 
   onNext, 
-  onPrev 
+  onPrev,
+  background
 }: SlideProps) => {
   const isActive = index === slideIndex;
+  
+  const headerStyle = background 
+    ? { background } 
+    : { background: 'linear-gradient(to right, #3b82f6, #6366f1)' };
   
   return (
     <Transition 
@@ -37,7 +43,7 @@ const Slide = ({
     >
       <div className="flex justify-center items-center min-h-[500px]">
         <Card className="w-full max-w-4xl bg-white shadow-formal">
-          <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg p-6">
+          <CardHeader className="text-white rounded-t-lg p-6" style={headerStyle}>
             <CardTitle className="text-2xl font-bold text-center">{title}</CardTitle>
           </CardHeader>
           <CardContent className="p-8">

@@ -32,8 +32,8 @@ const Presentation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-8 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <PresentationIcon className="h-6 w-6 text-blue-600" />
-            <h1 className="text-3xl font-bold text-blue-800">מצגת: מערכות מידע בזמן מגפת COVID-19</h1>
+            <PresentationIcon className="h-6 w-6 text-purple-600" />
+            <h1 className="text-3xl font-bold text-purple-800">מגמות בעיצוב דיגיטלי מודרני</h1>
           </div>
           <div className="flex items-center space-x-2">
             <Button

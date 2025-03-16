@@ -35,6 +35,7 @@ const PresentationSlides = ({
             key={index}
             title={slide.title}
             content={slide.content}
+            background={slide.background}
             index={index}
             slideIndex={slideIndex}
             totalSlides={slides.length}

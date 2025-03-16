@@ -17,18 +17,24 @@ const PresentationCarousel = ({ slides }: PresentationCarouselProps) => {
   return (
     <Carousel className="max-w-5xl mx-auto">
       <CarouselContent>
-        {slides.map((slide, index) => (
-          <CarouselItem key={index}>
-            <Card className="border shadow-md">
-              <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-                <CardTitle>{slide.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                {slide.content}
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        ))}
+        {slides.map((slide, index) => {
+          const headerStyle = slide.background 
+            ? { background: slide.background } 
+            : { background: 'linear-gradient(to right, #3b82f6, #6366f1)' };
+            
+          return (
+            <CarouselItem key={index}>
+              <Card className="border shadow-md">
+                <CardHeader className="text-white" style={headerStyle}>
+                  <CardTitle>{slide.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  {slide.content}
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          );
+        })}
       </CarouselContent>
       <div className="flex justify-center mt-4">
         <CarouselPrevious className="relative inset-0 translate-y-0 mr-2" />
