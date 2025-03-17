@@ -1,4 +1,3 @@
-
 import { MainLayout } from "@/layouts/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { appointments as initialAppointments } from "@/data/mockData";
@@ -63,7 +62,7 @@ const Appointments = () => {
 
   return (
     <MainLayout>
-      <div className="animate-fadeIn">
+      <div className="animate-fadeIn" dir="rtl">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">ניהול פגישות</h1>
           <AddAppointmentForm onAppointmentAdded={handleAppointmentAdded} />

@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { treatmentChecklistItems } from "@/data/mockData";
 import { 
   Card, 
   CardContent, 
@@ -12,6 +11,7 @@ import {
   RadioGroupItem 
 } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Eye } from "lucide-react";
 
 type ChecklistItemStatus = "done" | "not-done" | "not-relevant";
 
@@ -24,9 +24,21 @@ interface TreatmentChecklistProps {
   onChange: (checklist: ChecklistItem[]) => void;
 }
 
+// רשימת משימות לטיפול ביתי בעיניים
+const homeEyeCareItems = [
+  { id: "eyedrops", text: "מעקב טיפות עיניים" },
+  { id: "eyepatch", text: "שימוש ברטייה" },
+  { id: "blinking", text: "תרגילי עצימת עין" },
+  { id: "focusing", text: "תרגילי התמקדות" },
+  { id: "distance", text: "תרגילי ראייה למרחק" },
+  { id: "rest", text: "הקפדה על מנוחת עיניים" },
+  { id: "screentime", text: "הגבלת זמן מסך" },
+  { id: "hygiene", text: "שמירה על היגיינת עיניים" }
+];
+
 export const TreatmentChecklist = ({ onChange }: TreatmentChecklistProps) => {
   const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>(
-    treatmentChecklistItems.map(item => ({
+    homeEyeCareItems.map(item => ({
       itemId: item.id,
       status: "not-done" as ChecklistItemStatus
     }))
@@ -43,18 +55,21 @@ export const TreatmentChecklist = ({ onChange }: TreatmentChecklistProps) => {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>רשימת בדיקות</CardTitle>
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 py-4">
+        <CardTitle className="text-white flex items-center justify-center">
+          <Eye className="ml-2 h-5 w-5" />
+          משימות לטיפול ביתי בעיניים
+        </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <div className="space-y-6">
-          {treatmentChecklistItems.map((item) => {
+          {homeEyeCareItems.map((item) => {
             const currentItem = checklistItems.find(i => i.itemId === item.id);
             const currentStatus = currentItem ? currentItem.status : "not-done";
             
             return (
-              <div key={item.id} className="space-y-2">
-                <div className="font-medium">{item.text}</div>
+              <div key={item.id} className="space-y-2 bg-gray-50 p-4 rounded-lg">
+                <div className="font-medium text-blue-700">{item.text}</div>
                 <RadioGroup 
                   value={currentStatus}
                   onValueChange={(value) => handleStatusChange(item.id, value as ChecklistItemStatus)}
