@@ -1,8 +1,7 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, Calendar, BarChart, Settings, 
-  Menu, ChevronRight, LogOut, Eye, PresentationIcon 
+  Menu, ChevronRight, LogOut, Eye 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,6 @@ export function SidebarNav({ isOpen, onToggle }: SidebarNavProps) {
     { name: "מטופלים", path: "/patients", icon: Users },
     { name: "פגישות", path: "/appointments", icon: Calendar },
     { name: "סטטיסטיקות", path: "/stats", icon: BarChart },
-    { name: "מצגת", path: "/presentation", icon: PresentationIcon },
     { name: "הגדרות", path: "/settings", icon: Settings },
   ];
 
