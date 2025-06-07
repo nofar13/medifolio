@@ -1,9 +1,11 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { medicalHistories, patients } from "@/data/mockData";
 import { MedicalHistory, Patient } from "@/types";
@@ -146,7 +148,7 @@ const PatientTreatment = () => {
               </Card>
             ) : (
               <div className="space-y-6">
-                {histories.map((history, index) => (
+                {patientHistory.map((history, index) => (
                   <Card key={history.id}>
                     <CardHeader>
                       <CardTitle>טיפול מתאריך {history.date}</CardTitle>

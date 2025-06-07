@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import { PatientHistory } from "@/components/Patients/PatientHistory";
 import AddPatientForm from "@/components/Patients/AddPatientForm";
+import EditPatientForm from "@/components/Patients/EditPatientForm";
 import { PatientSearch } from "./PatientSearch";
 import { PatientTabs } from "./PatientTabs";
 import { PatientsListView } from "./PatientsListView";
@@ -86,10 +87,9 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
       )}
 
       {isEditing && selectedPatient && (
-        <AddPatientForm
+        <EditPatientForm
           patient={selectedPatient}
-          onPatientAdded={handleUpdatePatient}
-          isEditing={true}
+          onPatientUpdated={handleUpdatePatient}
         />
       )}
     </>
