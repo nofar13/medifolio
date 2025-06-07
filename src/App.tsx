@@ -12,6 +12,7 @@ import PatientTreatment from "@/pages/PatientTreatment";
 import Appointments from "@/pages/Appointments";
 import Stats from "@/pages/Stats";
 import CurrentTreatment from "@/pages/CurrentTreatment";
+import DatabaseManagement from "@/pages/DatabaseManagement";
 import EnglishResume from "@/components/EnglishResume";
 
 const queryClient = new QueryClient();
