@@ -1,8 +1,7 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,93 +11,36 @@ import {
 import { PatientFormData, Patient } from "@/types";
 import { toast } from "@/hooks/use-toast";
 import { PlusCircle } from "lucide-react";
-import AddPatientFormContent from "./AddPatientFormContent";
-import EditPatientFormContent from "./EditPatientFormContent";
-
-const formSchema = z.object({
-  idNumber: z.string().min(5, { message: "חובה להזין ת.ז תקינה" }),
-  name: z.string().min(2, { message: "חובה להזין שם מלא" }),
-  phone: z.string().min(9, { message: "חובה להזין מספר טלפון תקין" }),
-  email: z.string().email({ message: "יש להזין אימייל תקין" }),
-  age: z.coerce.number().min(1, { message: "חובה להזין גיל תקין" }),
-  gender: z.enum(["זכר", "נקבה", "אחר"], { required_error: "יש לבחור מגדר" }),
-  additionalNotes: z.string().optional(),
-});
+import { patientFormSchema, PatientFormValues } from "./schemas/patientFormSchema";
+import { PatientForm } from "./PatientForm";
 
 interface AddPatientFormProps {
   onPatientAdded?: (patient: Patient) => void;
-  patient?: Patient;
-  isEditing?: boolean;
 }
 
-const AddPatientForm = ({ onPatientAdded, patient, isEditing = false }: AddPatientFormProps) => {
+const AddPatientForm = ({ onPatientAdded }: AddPatientFormProps) => {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<PatientFormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      idNumber: "",
-      name: "",
-      phone: "",
-      email: "",
-      age: undefined,
-      gender: undefined,
-      additionalNotes: "",
-    },
-  });
+  const handleSubmit = (data: PatientFormData) => {
+    const newPatient: Patient = {
+      id: Date.now().toString(),
+      ...data,
+      medicalHistory: [],
+    };
 
-  useEffect(() => {
-    if (patient && isEditing) {
-      form.reset({
-        idNumber: patient.idNumber,
-        name: patient.name,
-        phone: patient.phone,
-        email: patient.email,
-        age: patient.age,
-        gender: patient.gender as "זכר" | "נקבה" | "אחר",
-        additionalNotes: patient.additionalNotes || "",
-      });
+    console.log("Adding new patient:", newPatient);
+    
+    toast({
+      title: "מטופל חדש נוסף בהצלחה",
+      description: `המטופל ${data.name} נוסף למערכת`,
+    });
+
+    if (onPatientAdded) {
+      onPatientAdded(newPatient);
     }
-  }, [patient, form, isEditing]);
 
-  function onSubmit(data: PatientFormData) {
-    if (isEditing && patient) {
-      const updatedPatient: Patient = {
-        ...patient,
-        ...data,
-      };
-      
-      console.log("Updating patient:", updatedPatient);
-      
-      if (onPatientAdded) {
-        onPatientAdded(updatedPatient);
-      }
-    } else {
-      const newPatient: Patient = {
-        id: Date.now().toString(), // Generate a temporary ID
-        ...data,
-        medicalHistory: [],
-      };
-  
-      console.log("Adding new patient:", newPatient);
-      
-      toast({
-        title: "מטופל חדש נוסף בהצלחה",
-        description: `המטופל ${data.name} נוסף למערכת`,
-      });
-  
-      if (onPatientAdded) {
-        onPatientAdded(newPatient);
-      }
-  
-      setOpen(false);
-      form.reset();
-    }
-  }
-
-  if (isEditing) {
-    return <EditPatientFormContent form={form} onSubmit={onSubmit} isEditing={true} />;
-  }
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -108,8 +50,11 @@ const AddPatientForm = ({ onPatientAdded, patient, isEditing = false }: AddPatie
           הוסף מטופל חדש
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[550px]" dir="rtl">
-        <AddPatientFormContent form={form} onSubmit={onSubmit} />
+      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto" dir="rtl">
+        <PatientForm 
+          onSubmit={handleSubmit}
+          submitLabel="שמור מטופל"
+        />
       </DialogContent>
     </Dialog>
   );

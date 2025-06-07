@@ -5,6 +5,7 @@ import { toast } from "@/hooks/use-toast";
 
 export function usePatients(initialPatients: Patient[], medicalHistories: MedicalHistory[]) {
   const [allPatients, setAllPatients] = useState<Patient[]>(initialPatients);
+  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(medicalHistories);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isAddingPatient, setIsAddingPatient] = useState(false);
@@ -13,7 +14,7 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
 
   // Combine patients with their medical history
   const patientsWithHistory = allPatients.map(patient => {
-    const patientHistory = medicalHistories.filter(history => 
+    const patientHistory = allMedicalHistories.filter(history => 
       history.patientId === patient.id
     );
     return {...patient, medicalHistory: patientHistory};
@@ -51,10 +52,18 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     setAllPatients((prevPatients) => 
       prevPatients.filter((patient) => patient.id !== patientId)
     );
+    // Also remove related medical histories
+    setAllMedicalHistories((prevHistories) =>
+      prevHistories.filter((history) => history.patientId !== patientId)
+    );
     toast({
       title: "המטופל הוסר בהצלחה",
       description: "המטופל הוסר ממאגר הנתונים",
     });
+  };
+
+  const handleAddMedicalHistory = (newHistory: MedicalHistory) => {
+    setAllMedicalHistories((prevHistories) => [newHistory, ...prevHistories]);
   };
 
   const handleViewPatientHistory = (patient: Patient) => {
@@ -69,6 +78,14 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
 
   const toggleAddPatient = () => setIsAddingPatient(!isAddingPatient);
 
+  const getPatientById = (patientId: string): Patient | undefined => {
+    return patientsWithHistory.find(patient => patient.id === patientId);
+  };
+
+  const getPatientHistory = (patientId: string): MedicalHistory[] => {
+    return allMedicalHistories.filter(history => history.patientId === patientId);
+  };
+
   return {
     filteredPatients,
     selectedPatient,
@@ -76,13 +93,17 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     isAddingPatient,
     searchTerm,
     activeTab,
+    allMedicalHistories,
     handleAddPatient,
     handleUpdatePatient,
     handleDeletePatient,
+    handleAddMedicalHistory,
     handleViewPatientHistory,
     handleEditPatient,
     setSearchTerm,
     setActiveTab,
-    toggleAddPatient
+    toggleAddPatient,
+    getPatientById,
+    getPatientHistory
   };
 }
