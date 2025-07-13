@@ -25,7 +25,6 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     activeTab,
     handleAddPatient,
     handleUpdatePatient,
-    handleDeletePatient,
     handleViewPatientHistory,
     handleEditPatient,
     setSearchTerm,
@@ -43,7 +42,6 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
       );
     }
 
-    // Get the patient's medical history from the hook instead of from the patient object
     const patientHistory = getPatientHistory(selectedPatient.id);
 
     return (
@@ -52,6 +50,11 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
         patientName={selectedPatient.name}
       />
     );
+  };
+
+  // Dummy function for delete - no longer used but needed for component interface
+  const handleDeletePatient = (patientId: string) => {
+    // This function is intentionally empty as delete functionality is removed
   };
 
   return (

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Eye, Pencil, Trash, FilePlus } from "lucide-react";
+import { Eye, Pencil, FilePlus } from "lucide-react";
 
 interface PatientsListViewProps {
   patients: Patient[];
@@ -26,10 +26,6 @@ export const PatientsListView = ({
   onDelete 
 }: PatientsListViewProps) => {
   const navigate = useNavigate();
-
-  const handleNavigateToTreatment = (patientId: string) => {
-    navigate(`/patients/${patientId}/treatment`);
-  };
 
   const handleNavigateToCurrentTreatment = (patientId: string) => {
     navigate(`/patients/${patientId}/current-treatment`);
@@ -96,14 +92,6 @@ export const PatientsListView = ({
                       title="ערוך מטופל"
                     >
                       <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={() => onDelete(patient.id)}
-                      title="מחק מטופל"
-                    >
-                      <Trash className="h-4 w-4" />
                     </Button>
                   </div>
                 </TableCell>

@@ -48,20 +48,6 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     });
   };
 
-  const handleDeletePatient = (patientId: string) => {
-    setAllPatients((prevPatients) => 
-      prevPatients.filter((patient) => patient.id !== patientId)
-    );
-    // Also remove related medical histories
-    setAllMedicalHistories((prevHistories) =>
-      prevHistories.filter((history) => history.patientId !== patientId)
-    );
-    toast({
-      title: "המטופל הוסר בהצלחה",
-      description: "המטופל הוסר ממאגר הנתונים",
-    });
-  };
-
   const handleAddMedicalHistory = (newHistory: MedicalHistory) => {
     setAllMedicalHistories((prevHistories) => [newHistory, ...prevHistories]);
   };
@@ -96,7 +82,6 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     allMedicalHistories,
     handleAddPatient,
     handleUpdatePatient,
-    handleDeletePatient,
     handleAddMedicalHistory,
     handleViewPatientHistory,
     handleEditPatient,
