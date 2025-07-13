@@ -30,7 +30,8 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     handleEditPatient,
     setSearchTerm,
     setActiveTab,
-    toggleAddPatient
+    toggleAddPatient,
+    getPatientHistory
   } = usePatients(initialPatients, medicalHistories);
 
   const renderPatientHistory = () => {
@@ -42,9 +43,12 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
       );
     }
 
+    // Get the patient's medical history from the hook instead of from the patient object
+    const patientHistory = getPatientHistory(selectedPatient.id);
+
     return (
       <PatientHistory 
-        history={selectedPatient.medicalHistory || []} 
+        history={patientHistory} 
         patientName={selectedPatient.name}
       />
     );
