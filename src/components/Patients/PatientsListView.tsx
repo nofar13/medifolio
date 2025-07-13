@@ -35,6 +35,11 @@ export const PatientsListView = ({
     navigate(`/patients/${patientId}/current-treatment`);
   };
 
+  const handleViewHistory = (patient: Patient) => {
+    console.log('Viewing history for patient:', patient.name);
+    onView(patient);
+  };
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -71,6 +76,7 @@ export const PatientsListView = ({
                       variant="outline" 
                       size="icon" 
                       onClick={() => handleNavigateToCurrentTreatment(patient.id)}
+                      title="טיפול נוכחי"
                     >
                       <FilePlus className="h-4 w-4" />
                     </Button>
@@ -78,13 +84,24 @@ export const PatientsListView = ({
                       variant="outline" 
                       size="icon" 
                       onClick={() => handleNavigateToTreatment(patient.id)}
+                      title="היסטוריית טיפולים מפורטת"
                     >
                       <Eye className="h-4 w-4" />
                     </Button>
                     <Button 
                       variant="outline" 
                       size="icon" 
+                      onClick={() => handleViewHistory(patient)}
+                      title="צפה בהיסטוריה רפואית"
+                      className="bg-blue-50 hover:bg-blue-100"
+                    >
+                      <Eye className="h-4 w-4 text-blue-600" />
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
                       onClick={() => onEdit(patient)}
+                      title="ערוך מטופל"
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
@@ -92,6 +109,7 @@ export const PatientsListView = ({
                       variant="outline" 
                       size="icon" 
                       onClick={() => onDelete(patient.id)}
+                      title="מחק מטופל"
                     >
                       <Trash className="h-4 w-4" />
                     </Button>
