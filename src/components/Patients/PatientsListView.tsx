@@ -83,14 +83,6 @@ export const PatientsListView = ({
                     <Button 
                       variant="outline" 
                       size="icon" 
-                      onClick={() => handleNavigateToTreatment(patient.id)}
-                      title="היסטוריית טיפולים מפורטת"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
                       onClick={() => handleViewHistory(patient)}
                       title="צפה בהיסטוריה רפואית"
                       className="bg-blue-50 hover:bg-blue-100"
