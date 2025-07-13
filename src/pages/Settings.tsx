@@ -15,7 +15,6 @@ const Settings = () => {
 
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic to save settings would go here
     toast.success("ההגדרות נשמרו בהצלחה");
   };
 
@@ -94,11 +93,64 @@ const Settings = () => {
           
           <Card className="formal-card">
             <CardHeader className="bg-gray-50 py-4 border-b border-gray-100">
+              <CardTitle className="text-lg text-right text-gray-800">מידע נוסף על המרפאה</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-right">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">שעות פעילות:</h3>
+                    <p className="text-gray-600">א'-ה': 08:00-17:00</p>
+                    <p className="text-gray-600">ו': 08:00-13:00</p>
+                    <p className="text-gray-600">שבת: סגור</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">שירותים:</h3>
+                    <p className="text-gray-600">• בדיקות ראייה מקיפות</p>
+                    <p className="text-gray-600">• התאמת משקפיים</p>
+                    <p className="text-gray-600">• טיפול בפזילות</p>
+                    <p className="text-gray-600">• בדיקות עיניים לילדים</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">צוות רפואי:</h3>
+                    <p className="text-gray-600">ד"ר יונינה כהן - אופטומטריסטית מוסמכת</p>
+                    <p className="text-gray-600">15 שנות ניסיון בתחום</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">ציוד מתקדם:</h3>
+                    <p className="text-gray-600">• אוטו-רפרקטומטר</p>
+                    <p className="text-gray-600">• מכשיר למדידת לחץ עין</p>
+                    <p className="text-gray-600">• מערכת בדיקת שדה ראייה</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="formal-card">
+            <CardHeader className="bg-gray-50 py-4 border-b border-gray-100">
               <CardTitle className="text-lg text-right text-gray-800">הגדרות מערכת</CardTitle>
             </CardHeader>
             <CardContent className="pt-6">
               <div className="space-y-6 text-right">
-                <p className="text-gray-600">הגדרות נוספות יתווספו בעתיד</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">גיבוי נתונים:</h3>
+                    <p className="text-gray-600 mb-2">גיבוי אוטומטי יומי</p>
+                    <Button variant="outline" size="sm">גבה עכשיו</Button>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">עדכוני מערכת:</h3>
+                    <p className="text-gray-600 mb-2">גרסה נוכחית: 2.1.0</p>
+                    <Button variant="outline" size="sm">בדוק עדכונים</Button>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
