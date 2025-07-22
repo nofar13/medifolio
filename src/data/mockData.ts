@@ -135,7 +135,7 @@ export const medicalHistories: MedicalHistory[] = [
       nearPointOfConvergence: "6cm",
       depthPerception: "שכר"
     },
-    treatmentNotes: "נבדק עם משקפיים חדשים, תפקוד טוב",
+    treatmentNotes: "נבדק עם משקפיים חדשים, תפקוד טוב (רשימת בדיקות: בדיקת לחץ תוך-עיני: בוצע, בדיקת קרקעית העין: לא בוצע, מדידת חדות ראייה: בוצע, התאמת משקפיים/עדשות: בוצע)",
     followupNotes: "ביקורת בעוד שנה",
     prescriptionNotes: "אין צורך במרשם חדש"
   },
@@ -183,7 +183,7 @@ export const medicalHistories: MedicalHistory[] = [
       nearPointOfConvergence: "8cm",
       depthPerception: "תקין"
     },
-    treatmentNotes: "טיפות עיניים לטיפול ביובש",
+    treatmentNotes: "טיפות עיניים לטיפול ביובש (רשימת בדיקות: בדיקת לחץ תוך-עיני: בוצע, בדיקת קרקעית העין: בוצע, מדידת חדות ראייה: בוצע, התאמת משקפיים/עדשות: לא רלוונטי)",
     followupNotes: "ביקורת בעוד 3 חודשים",
     prescriptionNotes: "מרשם לטיפות עיניים"
   },
@@ -207,7 +207,7 @@ export const medicalHistories: MedicalHistory[] = [
       nearPointOfConvergence: "7cm",
       depthPerception: "תקין"
     },
-    treatmentNotes: "המלצה למעקב אחר התפתחות הקטרקט",
+    treatmentNotes: "המלצה למעקב אחר התפתחות הקטרקט (רשימת בדיקות: בדיקת לחץ תוך-עיני: בוצע, בדיקת קרקעית העין: בוצע, מדידת חדות ראייה: בוצע, התאמת משקפיים/עדשות: לא בוצע)",
     followupNotes: "ביקורת בעוד 4 חודשים",
     prescriptionNotes: "מרשם למשקפיים מעודכן"
   }
