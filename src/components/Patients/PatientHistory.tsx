@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { MedicalHistory } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ interface PatientHistoryProps {
 }
 
 export function PatientHistory({ history, patientName }: PatientHistoryProps) {
+  const navigate = useNavigate();
   if (history.length === 0) {
     return (
       <div className="text-center py-12">
@@ -34,7 +36,7 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
         </h2>
         <Button 
           className="bg-green-500 hover:bg-green-600"
-          onClick={() => window.history.back()}
+          onClick={() => navigate(-1)}
         >
           חזור
         </Button>
