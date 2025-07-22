@@ -1,16 +1,30 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Patient, MedicalHistory } from "@/types";
 import { toast } from "@/hooks/use-toast";
 
 export function usePatients(initialPatients: Patient[], medicalHistories: MedicalHistory[]) {
   const [allPatients, setAllPatients] = useState<Patient[]>(initialPatients);
-  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(medicalHistories);
+  
+  // Load medical histories from localStorage or use initial data
+  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(() => {
+    const saved = localStorage.getItem('medicalHistories');
+    return saved ? JSON.parse(saved) : medicalHistories;
+  });
+  
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("list");
+
+  // Update medical histories from localStorage when component mounts
+  useEffect(() => {
+    const saved = localStorage.getItem('medicalHistories');
+    if (saved) {
+      setAllMedicalHistories(JSON.parse(saved));
+    }
+  }, []);
 
   // Combine patients with their medical history
   const patientsWithHistory = allPatients.map(patient => {
@@ -49,7 +63,12 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
   };
 
   const handleAddMedicalHistory = (newHistory: MedicalHistory) => {
-    setAllMedicalHistories((prevHistories) => [newHistory, ...prevHistories]);
+    setAllMedicalHistories((prevHistories) => {
+      const updatedHistories = [newHistory, ...prevHistories];
+      // Save to localStorage for persistence
+      localStorage.setItem('medicalHistories', JSON.stringify(updatedHistories));
+      return updatedHistories;
+    });
   };
 
   const handleViewPatientHistory = (patient: Patient) => {

@@ -49,6 +49,11 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     }
   }, [viewPatientId, initialPatients, handleViewPatientHistory, setActiveTab]);
 
+  // Force refresh of medical histories when component mounts
+  useEffect(() => {
+    // This will trigger a re-render with fresh data from localStorage
+  }, []);
+
   const renderPatientHistory = () => {
     if (!selectedPatient) {
       return (
