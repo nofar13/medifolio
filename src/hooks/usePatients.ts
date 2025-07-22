@@ -103,6 +103,7 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     setActiveTab,
     toggleAddPatient,
     getPatientById,
-    getPatientHistory
+    getPatientHistory,
+    setIsEditing
   };
 }

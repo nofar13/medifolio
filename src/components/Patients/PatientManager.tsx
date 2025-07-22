@@ -35,7 +35,8 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     setSearchTerm,
     setActiveTab,
     toggleAddPatient,
-    getPatientHistory
+    getPatientHistory,
+    setIsEditing
   } = usePatients(initialPatients, medicalHistories);
 
   // Auto-open patient history if view parameter is present
@@ -118,6 +119,8 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
         <EditPatientForm
           patient={selectedPatient}
           onPatientUpdated={handleUpdatePatient}
+          open={isEditing}
+          onOpenChange={setIsEditing}
         />
       )}
     </>

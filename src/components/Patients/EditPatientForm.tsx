@@ -14,10 +14,11 @@ import { PatientForm } from "./PatientForm";
 interface EditPatientFormProps {
   patient: Patient;
   onPatientUpdated?: (patient: Patient) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-const EditPatientForm = ({ patient, onPatientUpdated }: EditPatientFormProps) => {
-  const [open, setOpen] = useState(false);
+const EditPatientForm = ({ patient, onPatientUpdated, open = false, onOpenChange }: EditPatientFormProps) => {
 
   const handleSubmit = (data: PatientFormData) => {
     const updatedPatient: Patient = {
@@ -36,17 +37,13 @@ const EditPatientForm = ({ patient, onPatientUpdated }: EditPatientFormProps) =>
       onPatientUpdated(updatedPatient);
     }
 
-    setOpen(false);
+    if (onOpenChange) {
+      onOpenChange(false);
+    }
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Edit className="ml-2 h-4 w-4" />
-          ערוך
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto" dir="rtl">
         <PatientForm 
           initialValues={patient}
