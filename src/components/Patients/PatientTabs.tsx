@@ -21,7 +21,7 @@ export const PatientTabs = ({
     <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
       <TabsList className="mb-4">
         <TabsTrigger value="list">רשימת מטופלים</TabsTrigger>
-        <TabsTrigger value="view">
+        <TabsTrigger value="history">
           {selectedPatientName ? `היסטוריה רפואית - ${selectedPatientName}` : 'צפה בהיסטוריה'}
         </TabsTrigger>
       </TabsList>
@@ -30,7 +30,7 @@ export const PatientTabs = ({
         {listContent}
       </TabsContent>
       
-      <TabsContent value="view">
+      <TabsContent value="history">
         {historyContent}
       </TabsContent>
     </Tabs>
