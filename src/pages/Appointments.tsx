@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Appointment } from "@/types";
 import AddAppointmentForm from "@/components/Appointments/AddAppointmentForm";
+import EditAppointmentForm from "@/components/Appointments/EditAppointmentForm";
 import { isBefore, parseISO, startOfDay } from "date-fns";
 import { 
   Select,
@@ -13,15 +14,52 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Pencil, Trash2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const Appointments = () => {
   const [filter, setFilter] = useState<"all" | "scheduled" | "completed">("all");
   const [appointments, setAppointments] = useState<Appointment[]>(initialAppointments);
   const [columnFilter, setColumnFilter] = useState<string>("none");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [editingAppointment, setEditingAppointment] = useState<Appointment | null>(null);
 
   const handleAppointmentAdded = (newAppointment: Appointment) => {
     setAppointments(prevAppointments => [...prevAppointments, newAppointment]);
+  };
+
+  const handleAppointmentUpdated = (updatedAppointment: Appointment) => {
+    setAppointments(prevAppointments =>
+      prevAppointments.map(appointment =>
+        appointment.id === updatedAppointment.id ? updatedAppointment : appointment
+      )
+    );
+    setEditingAppointment(null);
+  };
+
+  const handleDeleteAppointment = (appointmentId: string) => {
+    const appointmentToDelete = appointments.find(app => app.id === appointmentId);
+    setAppointments(prevAppointments =>
+      prevAppointments.filter(appointment => appointment.id !== appointmentId)
+    );
+    
+    toast({
+      title: "הפגישה בוטלה בהצלחה",
+      description: appointmentToDelete 
+        ? `פגישה עם ${appointmentToDelete.patientName} בוטלה` 
+        : "הפגישה בוטלה",
+    });
   };
   
   const filteredAppointments = appointments.filter(appointment => {
@@ -146,8 +184,45 @@ const Appointments = () => {
                       <tr key={appointment.id} className="border-b border-gray-200 hover:bg-gray-50">
                         <td className="py-4 px-4">
                           <div className="flex space-x-2 rtl:space-x-reverse">
-                            <Button variant="ghost" size="sm" className="text-blue-600 hover:bg-blue-50">ערוך</Button>
-                            <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50">בטל</Button>
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              onClick={() => setEditingAppointment(appointment)}
+                              className="text-blue-600 hover:bg-blue-50"
+                            >
+                              <Pencil className="h-4 w-4 ml-1" />
+                              ערוך
+                            </Button>
+                            
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="text-red-500 hover:bg-red-50"
+                                >
+                                  <Trash2 className="h-4 w-4 ml-1" />
+                                  בטל
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent dir="rtl">
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>האם אתה בטוח?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    פעולה זו תבטל את הפגישה עם {appointment.patientName} ב-{appointment.date} בשעה {appointment.time}.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>ביטול</AlertDialogCancel>
+                                  <AlertDialogAction 
+                                    onClick={() => handleDeleteAppointment(appointment.id)}
+                                    className="bg-red-600 hover:bg-red-700"
+                                  >
+                                    בטל פגישה
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           </div>
                         </td>
                         <td className="py-4 px-4 text-right">{appointment.notes}</td>
@@ -177,6 +252,15 @@ const Appointments = () => {
             </div>
           </CardContent>
         </Card>
+        
+        {editingAppointment && (
+          <EditAppointmentForm
+            appointment={editingAppointment}
+            open={!!editingAppointment}
+            onOpenChange={(open) => !open && setEditingAppointment(null)}
+            onAppointmentUpdated={handleAppointmentUpdated}
+          />
+        )}
       </div>
     </MainLayout>
   );
