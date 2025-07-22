@@ -30,7 +30,7 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-right mb-6">
-          היסטוריית טיפולים {patientName && `- ${patientName}`}
+          היסטורית המטופל {patientName && `- ${patientName}`}
         </h2>
         <Button 
           className="bg-green-500 hover:bg-green-600"
