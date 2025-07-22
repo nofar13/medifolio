@@ -137,7 +137,13 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
                   </div>
 
                   {/* צ'קליסט בדיקות */}
-                  {record.treatmentNotes && record.treatmentNotes.includes("(רשימת בדיקות:") && (
+                  {(() => {
+                    console.log("Full treatment notes:", record.treatmentNotes);
+                    console.log("Looking for: (רשימת בדיקות:");
+                    const hasChecklist = record.treatmentNotes && record.treatmentNotes.includes("(רשימת בדיקות:");
+                    console.log("Has checklist:", hasChecklist);
+                    return hasChecklist;
+                  })() && (
                     <Card className="mt-4 border-l-4 border-l-purple-400">
                       <CardContent className="pt-4">
                         <h4 className="text-lg font-semibold mb-3 text-right text-purple-600">רשימת בדיקות שבוצעו</h4>
