@@ -103,7 +103,12 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
           </div>
 
           <div className="flex justify-center mt-6">
-            <Button className="bg-green-500 hover:bg-green-600">חזור</Button>
+            <Button 
+              className="bg-green-500 hover:bg-green-600"
+              onClick={() => window.history.back()}
+            >
+              חזור
+            </Button>
           </div>
         </CardContent>
       </Card>

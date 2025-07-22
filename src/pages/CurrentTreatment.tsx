@@ -250,39 +250,34 @@ const CurrentTreatment = () => {
                       <td className="py-2 px-4 border border-gray-300 font-medium text-orange-600">זווית פזילה</td>
                       <td className="py-2 px-4 border border-gray-300">
                         <Input
-                          name="pupilDistance"
-                          value={lensesData.pupilDistance}
-                          onChange={handleLensesDataChange}
-                          className="text-center"
-                        />
-                      </td>
-                      <td className="py-2 px-4 border border-gray-300 bg-gray-50">
-                        <Input
-                          disabled
-                          className="text-center bg-gray-50"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 px-4 border border-gray-300 font-medium text-orange-600">תנועות עיניים</td>
-                      <td className="py-2 px-4 border border-gray-300">
-                        <Input
                           name="angleOfView"
                           value={lensesData.angleOfView}
                           onChange={handleLensesDataChange}
                           className="text-center"
                         />
                       </td>
-                      <td className="py-2 px-4 border border-gray-300 bg-gray-50">
+                      <td className="py-2 px-4 border border-gray-300">
                         <Input
-                          disabled
-                          className="text-center bg-gray-50"
+                          name="pupilDistance"
+                          value={lensesData.pupilDistance}
+                          onChange={handleLensesDataChange}
+                          className="text-center"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 px-4 border border-gray-300 font-medium text-orange-600">תנועות עיניים</td>
+                      <td className="py-2 px-4 border border-gray-300" colSpan={2}>
+                        <Input
+                          name="eyeMovements"
+                          placeholder="תנועות עיניים"
+                          className="text-center"
                         />
                       </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border border-gray-300 font-medium text-orange-600">ראיית עומק</td>
-                      <td className="py-2 px-4 border border-gray-300">
+                      <td className="py-2 px-4 border border-gray-300" colSpan={2}>
                         <Input
                           name="depthPerception"
                           value={lensesData.depthPerception}
@@ -290,27 +285,15 @@ const CurrentTreatment = () => {
                           className="text-center"
                         />
                       </td>
-                      <td className="py-2 px-4 border border-gray-300 bg-gray-50">
-                        <Input
-                          disabled
-                          className="text-center bg-gray-50"
-                        />
-                      </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border border-gray-300 font-medium text-orange-600">Near Point of Convergence</td>
-                      <td className="py-2 px-4 border border-gray-300">
+                      <td className="py-2 px-4 border border-gray-300" colSpan={2}>
                         <Input
                           name="nearPointOfConvergence"
                           value={lensesData.nearPointOfConvergence}
                           onChange={handleLensesDataChange}
                           className="text-center"
-                        />
-                      </td>
-                      <td className="py-2 px-4 border border-gray-300 bg-gray-50">
-                        <Input
-                          disabled
-                          className="text-center bg-gray-50"
                         />
                       </td>
                     </tr>

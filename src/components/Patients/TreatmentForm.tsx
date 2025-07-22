@@ -340,7 +340,12 @@ export const TreatmentForm = ({ patient, onTreatmentSaved }: TreatmentFormProps)
                   <FormItem>
                     <FormLabel>הערות טיפול</FormLabel>
                     <FormControl>
-                      <Input placeholder="פרטי הטיפול והמלצות..." {...field} />
+                      <textarea 
+                        placeholder="פרטי הטיפול והמלצות..." 
+                        {...field}
+                        className="w-full min-h-[80px] p-2 border border-gray-300 rounded-md text-right"
+                        dir="rtl"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -354,7 +359,12 @@ export const TreatmentForm = ({ patient, onTreatmentSaved }: TreatmentFormProps)
                   <FormItem>
                     <FormLabel>הערות למעקב</FormLabel>
                     <FormControl>
-                      <Input placeholder="פרטים למעקב בעתיד..." {...field} />
+                      <textarea 
+                        placeholder="פרטים למעקב בעתיד..." 
+                        {...field}
+                        className="w-full min-h-[80px] p-2 border border-gray-300 rounded-md text-right"
+                        dir="rtl"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -368,7 +378,12 @@ export const TreatmentForm = ({ patient, onTreatmentSaved }: TreatmentFormProps)
                   <FormItem>
                     <FormLabel>מרשם</FormLabel>
                     <FormControl>
-                      <Input placeholder="פרטי מרשם שניתן..." {...field} />
+                      <textarea 
+                        placeholder="פרטי מרשם שניתן..." 
+                        {...field}
+                        className="w-full min-h-[80px] p-2 border border-gray-300 rounded-md text-right"
+                        dir="rtl"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -60,16 +60,7 @@ const RecentPatients = () => {
               {filteredPatients.map((patient) => (
                 <tr key={patient.id} className="hover:bg-gray-50/80 transition-colors">
                   <td className="py-4 px-4">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="text-gray-500 hover:text-subtle-blue hover:bg-gray-100/50"
-                      asChild
-                    >
-                      <Link to={`/patients/${patient.id}`}>
-                        <Eye className="h-4 w-4" />
-                      </Link>
-                    </Button>
+                    <span className="text-sm text-gray-400">אין פעולות</span>
                   </td>
                   <td className="py-4 px-4 text-right text-gray-600">{patient.phone}</td>
                   <td className="py-4 px-4 text-right text-gray-600">{patient.idNumber}</td>
