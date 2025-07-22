@@ -54,7 +54,7 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
 
   const handleViewPatientHistory = (patient: Patient) => {
     setSelectedPatient(patient);
-    setActiveTab("view");
+    setActiveTab("history");
   };
 
   const handleEditPatient = (patient: Patient) => {

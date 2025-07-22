@@ -18,8 +18,8 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
   if (history.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 font-medium">אין היסטוריה רפואית {patientName ? `ל${patientName}` : "למטופל זה"}</p>
-        <p className="text-gray-400 text-sm mt-1">הוסף בדיקה חדשה כדי להתחיל</p>
+        <p className="text-gray-500 font-medium">מטופל חדש - אין היסטוריה רפואית {patientName ? `ל${patientName}` : "למטופל זה"}</p>
+        <p className="text-gray-400 text-sm mt-1">הוסף בדיקה חדשה כדי להתחיל לבנות את ההיסטוריה הרפואית</p>
       </div>
     );
   }

@@ -100,10 +100,13 @@ const CurrentTreatment = () => {
     
     toast({
       title: "נשמר בהצלחה",
-      description: "נתוני הטיפול נשמרו בהצלחה",
+      description: "נתוני הטיפול נשמרו בהצלחה ומוצגים בהיסטוריית המטופל",
     });
     
-    navigate(`/patients/${patientId}/treatment`);
+    // Navigate back to patients with the history view opened
+    setTimeout(() => {
+      navigate(`/patients?view=${patientId}`);
+    }, 1000); // Small delay to ensure the history is saved
   };
   
   if (!patient) {
