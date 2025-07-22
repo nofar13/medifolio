@@ -9,6 +9,8 @@ import { PatientSearch } from "./PatientSearch";
 import { PatientTabs } from "./PatientTabs";
 import { PatientsListView } from "./PatientsListView";
 import { usePatients } from "@/hooks/usePatients";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 interface PatientManagerProps {
   initialPatients: Patient[];
@@ -16,6 +18,9 @@ interface PatientManagerProps {
 }
 
 export const PatientManager = ({ initialPatients, medicalHistories }: PatientManagerProps) => {
+  const [searchParams] = useSearchParams();
+  const viewPatientId = searchParams.get('view');
+  
   const {
     filteredPatients,
     selectedPatient,
@@ -32,6 +37,17 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     toggleAddPatient,
     getPatientHistory
   } = usePatients(initialPatients, medicalHistories);
+
+  // Auto-open patient history if view parameter is present
+  useEffect(() => {
+    if (viewPatientId) {
+      const patient = initialPatients.find(p => p.id === viewPatientId);
+      if (patient) {
+        handleViewPatientHistory(patient);
+        setActiveTab('history');
+      }
+    }
+  }, [viewPatientId, initialPatients, handleViewPatientHistory, setActiveTab]);
 
   const renderPatientHistory = () => {
     if (!selectedPatient) {
