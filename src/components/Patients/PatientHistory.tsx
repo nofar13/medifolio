@@ -137,29 +137,19 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
                   </div>
 
                   {/* צ'קליסט בדיקות */}
-                  {(() => {
-                    console.log("Checking for checklist in:", record.treatmentNotes);
-                    const hasChecklist = record.treatmentNotes && record.treatmentNotes.includes("רשימת בדיקות:");
-                    console.log("Has checklist:", hasChecklist);
-                    return hasChecklist;
-                  })() && (
+                  {record.treatmentNotes && record.treatmentNotes.includes("(רשימת בדיקות:") && (
                     <Card className="mt-4 border-l-4 border-l-purple-400">
                       <CardContent className="pt-4">
                         <h4 className="text-lg font-semibold mb-3 text-right text-purple-600">רשימת בדיקות שבוצעו</h4>
                         <div className="bg-purple-50 p-3 rounded-md">
                           {(() => {
-                            const checklistStart = record.treatmentNotes.indexOf("רשימת בדיקות:");
-                            console.log("Checklist start index:", checklistStart);
+                            const checklistStart = record.treatmentNotes.indexOf("(רשימת בדיקות:");
                             
                             if (checklistStart === -1) return null;
                             
-                            const checklistText = record.treatmentNotes.substring(checklistStart + "רשימת בדיקות:".length).trim();
-                            console.log("Checklist text:", checklistText);
-                            
-                            // Remove the closing parenthesis if it exists
+                            const checklistText = record.treatmentNotes.substring(checklistStart + "(רשימת בדיקות:".length).trim();
                             const cleanChecklistText = checklistText.replace(/\)$/, "");
                             const checklistItems = cleanChecklistText.split(", ").filter(item => item.trim());
-                            console.log("Checklist items:", checklistItems);
                             
                             return (
                               <div className="space-y-2">
@@ -194,9 +184,9 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
                             <div className="bg-gray-50 p-3 rounded-md mt-1">
                               <p className="text-right text-gray-700">
                                 {(() => {
-                                  const checklistStart = record.treatmentNotes.indexOf("(רשימת בדיקות:");
-                                  if (checklistStart === -1) return record.treatmentNotes;
-                                  return record.treatmentNotes.substring(0, checklistStart).trim();
+                                   const checklistStart = record.treatmentNotes.indexOf("(רשימת בדיקות:");
+                                   if (checklistStart === -1) return record.treatmentNotes;
+                                   return record.treatmentNotes.substring(0, checklistStart).trim();
                                 })()}
                               </p>
                             </div>
