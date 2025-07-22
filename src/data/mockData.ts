@@ -111,7 +111,7 @@ export const medicalHistories: MedicalHistory[] = [
       nearPointOfConvergence: "5cm",
       depthPerception: "שכר"
     },
-    treatmentNotes: "הומלץ על משקפיים חדשים עם ציפוי אנטי רפלקס",
+    treatmentNotes: "הומלץ על משקפיים חדשים עם ציפוי אנטי רפלקס (רשימת בדיקות: בדיקת לחץ תוך-עיני: בוצע, בדיקת קרקעית העין: בוצע, מדידת חדות ראייה: בוצע, התאמת משקפיים/עדשות: בוצע)",
     followupNotes: "ביקורת בעוד 6 חודשים",
     prescriptionNotes: "מרשם למשקפיים ניתן"
   },
