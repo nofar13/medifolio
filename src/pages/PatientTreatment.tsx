@@ -136,6 +136,7 @@ const PatientTreatment = () => {
             <TreatmentForm 
               patient={patient}
               onTreatmentSaved={handleTreatmentSaved}
+              isReturningPatient={patientHistory.length > 0}
             />
           </TabsContent>
           

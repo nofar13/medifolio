@@ -47,9 +47,10 @@ type TreatmentFormValues = z.infer<typeof treatmentFormSchema>;
 interface TreatmentFormProps {
   patient: Patient;
   onTreatmentSaved: (history: MedicalHistory) => void;
+  isReturningPatient?: boolean;
 }
 
-export const TreatmentForm = ({ patient, onTreatmentSaved }: TreatmentFormProps) => {
+export const TreatmentForm = ({ patient, onTreatmentSaved, isReturningPatient = true }: TreatmentFormProps) => {
   const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
 
   const form = useForm<TreatmentFormValues>({
@@ -111,7 +112,7 @@ export const TreatmentForm = ({ patient, onTreatmentSaved }: TreatmentFormProps)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <TreatmentChecklist onChange={handleChecklistChange} />
+        {isReturningPatient && <TreatmentChecklist onChange={handleChecklistChange} />}
         
         <Card>
           <CardHeader>
