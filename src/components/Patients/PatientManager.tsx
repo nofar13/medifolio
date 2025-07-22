@@ -36,7 +36,8 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     setActiveTab,
     toggleAddPatient,
     getPatientHistory,
-    setIsEditing
+    setIsEditing,
+    handleDeletePatient
   } = usePatients(initialPatients, medicalHistories);
 
   // Auto-open patient history if view parameter is present
@@ -74,10 +75,10 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
     );
   };
 
-  // Dummy function for delete - no longer used but needed for component interface
-  const handleDeletePatient = (patientId: string) => {
-    // This function is intentionally empty as delete functionality is removed
-  };
+  // No longer needed - using the actual delete function
+  // const handleDeletePatient = (patientId: string) => {
+  //   // This function is intentionally empty as delete functionality is removed
+  // };
 
   return (
     <>

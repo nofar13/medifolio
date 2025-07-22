@@ -76,6 +76,31 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     setIsEditing(true);
   };
 
+  const handleDeletePatient = (patientId: string) => {
+    setAllPatients((prevPatients) => 
+      prevPatients.filter(patient => patient.id !== patientId)
+    );
+    
+    // Also remove all medical history for this patient
+    setAllMedicalHistories((prevHistories) => {
+      const updatedHistories = prevHistories.filter(history => history.patientId !== patientId);
+      localStorage.setItem('medicalHistories', JSON.stringify(updatedHistories));
+      return updatedHistories;
+    });
+
+    // If the deleted patient was selected, clear selection
+    if (selectedPatient?.id === patientId) {
+      setSelectedPatient(null);
+      setActiveTab("list");
+    }
+
+    const deletedPatient = allPatients.find(p => p.id === patientId);
+    toast({
+      title: "המטופל הוסר בהצלחה",
+      description: deletedPatient ? `המטופל ${deletedPatient.name} הוסר מהמערכת` : "המטופל הוסר מהמערכת",
+    });
+  };
+
   const toggleAddPatient = () => setIsAddingPatient(!isAddingPatient);
 
   const getPatientById = (patientId: string): Patient | undefined => {
@@ -104,6 +129,7 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
     toggleAddPatient,
     getPatientById,
     getPatientHistory,
-    setIsEditing
+    setIsEditing,
+    handleDeletePatient
   };
 }

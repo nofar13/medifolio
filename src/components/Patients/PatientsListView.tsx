@@ -10,7 +10,18 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Eye, Pencil, FilePlus } from "lucide-react";
+import { Eye, Pencil, FilePlus, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface PatientsListViewProps {
   patients: Patient[];
@@ -93,6 +104,35 @@ export const PatientsListView = ({
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button 
+                          variant="outline" 
+                          size="icon" 
+                          title="הסר מטופל"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent dir="rtl">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>האם אתה בטוח?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            פעולה זו תמחק את המטופל {patient.name} מהמערכת לצמיתות. כל ההיסטוריה הרפואית שלו תימחק גם כן.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>ביטול</AlertDialogCancel>
+                          <AlertDialogAction 
+                            onClick={() => onDelete(patient.id)}
+                            className="bg-red-600 hover:bg-red-700"
+                          >
+                            מחק מטופל
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </TableCell>
               </TableRow>
