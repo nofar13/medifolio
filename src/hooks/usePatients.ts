@@ -7,10 +7,7 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
   const [allPatients, setAllPatients] = useState<Patient[]>(initialPatients);
   
   // Load medical histories from localStorage or use initial data
-  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(() => {
-    const saved = localStorage.getItem('medicalHistories');
-    return saved ? JSON.parse(saved) : medicalHistories;
-  });
+  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(medicalHistories);
   
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -18,13 +15,11 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("list");
 
-  // Update medical histories from localStorage when component mounts
+  // Clear localStorage cache and use fresh data
   useEffect(() => {
-    const saved = localStorage.getItem('medicalHistories');
-    if (saved) {
-      setAllMedicalHistories(JSON.parse(saved));
-    }
-  }, []);
+    localStorage.removeItem('medicalHistories');
+    setAllMedicalHistories(medicalHistories);
+  }, [medicalHistories]);
 
   // Combine patients with their medical history
   const patientsWithHistory = allPatients.map(patient => {
