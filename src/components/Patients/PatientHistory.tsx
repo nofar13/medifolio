@@ -136,6 +136,40 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
                     </Card>
                   </div>
 
+                  {/* צ'קליסט בדיקות */}
+                  {record.treatmentNotes && record.treatmentNotes.includes("רשימת בדיקות:") && (
+                    <Card className="mt-4 border-l-4 border-l-purple-400">
+                      <CardContent className="pt-4">
+                        <h4 className="text-lg font-semibold mb-3 text-right text-purple-600">רשימת בדיקות שבוצעו</h4>
+                        <div className="bg-purple-50 p-3 rounded-md">
+                          {(() => {
+                            const checklistStart = record.treatmentNotes.indexOf("רשימת בדיקות:");
+                            if (checklistStart === -1) return null;
+                            
+                            const checklistText = record.treatmentNotes.substring(checklistStart + "רשימת בדיקות:".length).trim();
+                            const checklistItems = checklistText.split(", ").filter(item => item.trim());
+                            
+                            return (
+                              <div className="space-y-2">
+                                {checklistItems.map((item, index) => {
+                                  const [itemName, status] = item.split(": ");
+                                  const statusColor = status === "בוצע" ? "text-green-600" : 
+                                                    status === "לא בוצע" ? "text-red-600" : "text-gray-500";
+                                  return (
+                                    <div key={index} className="flex justify-between items-center text-right">
+                                      <span className={`font-medium ${statusColor}`}>{status}</span>
+                                      <span className="text-gray-700">{itemName}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+
                   {/* הערות */}
                   {(record.treatmentNotes || record.followupNotes || record.prescriptionNotes) && (
                     <Card className="mt-4 border-l-4 border-l-orange-400">
@@ -146,7 +180,13 @@ export function PatientHistory({ history, patientName }: PatientHistoryProps) {
                           <div className="mb-3">
                             <span className="text-sm font-medium text-gray-600 block text-right">סיכום טיפול:</span>
                             <div className="bg-gray-50 p-3 rounded-md mt-1">
-                              <p className="text-right text-gray-700">{record.treatmentNotes}</p>
+                              <p className="text-right text-gray-700">
+                                {(() => {
+                                  const checklistStart = record.treatmentNotes.indexOf("(רשימת בדיקות:");
+                                  if (checklistStart === -1) return record.treatmentNotes;
+                                  return record.treatmentNotes.substring(0, checklistStart).trim();
+                                })()}
+                              </p>
                             </div>
                           </div>
                         )}
