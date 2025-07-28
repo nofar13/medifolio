@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { PatientFormData, Patient } from "@/types";
 import { toast } from "@/hooks/use-toast";
@@ -43,6 +45,9 @@ const AddPatientForm = ({ onPatientAdded, open, onOpenChange }: AddPatientFormPr
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto" dir="rtl">
+        <DialogHeader>
+          <DialogTitle>הוסף מטופל חדש</DialogTitle>
+        </DialogHeader>
         <PatientForm 
           onSubmit={handleSubmit}
           submitLabel="שמור מטופל"

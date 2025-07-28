@@ -4,22 +4,23 @@ import { Patient, MedicalHistory } from "@/types";
 import { toast } from "@/hooks/use-toast";
 
 export function usePatients(initialPatients: Patient[], medicalHistories: MedicalHistory[]) {
-  const [allPatients, setAllPatients] = useState<Patient[]>(initialPatients);
+  // Load patients from localStorage or use initial data
+  const [allPatients, setAllPatients] = useState<Patient[]>(() => {
+    const savedPatients = localStorage.getItem('patients');
+    return savedPatients ? JSON.parse(savedPatients) : initialPatients;
+  });
   
   // Load medical histories from localStorage or use initial data
-  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(medicalHistories);
+  const [allMedicalHistories, setAllMedicalHistories] = useState<MedicalHistory[]>(() => {
+    const savedHistories = localStorage.getItem('medicalHistories');
+    return savedHistories ? JSON.parse(savedHistories) : medicalHistories;
+  });
   
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("list");
-
-  // Clear localStorage cache and use fresh data
-  useEffect(() => {
-    localStorage.removeItem('medicalHistories');
-    setAllMedicalHistories(medicalHistories);
-  }, [medicalHistories]);
 
   // Combine patients with their medical history
   const patientsWithHistory = allPatients.map(patient => {
@@ -35,7 +36,11 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
   );
 
   const handleAddPatient = (newPatient: Patient) => {
-    setAllPatients((prevPatients) => [...prevPatients, newPatient]);
+    setAllPatients((prevPatients) => {
+      const updatedPatients = [...prevPatients, newPatient];
+      localStorage.setItem('patients', JSON.stringify(updatedPatients));
+      return updatedPatients;
+    });
     toast({
       title: "מטופל חדש נוסף בהצלחה",
       description: `מטופל ${newPatient.name} נוסף למערכת`,
@@ -44,11 +49,13 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
   };
 
   const handleUpdatePatient = (updatedPatient: Patient) => {
-    setAllPatients((prevPatients) =>
-      prevPatients.map((patient) =>
+    setAllPatients((prevPatients) => {
+      const updatedPatients = prevPatients.map((patient) =>
         patient.id === updatedPatient.id ? updatedPatient : patient
-      )
-    );
+      );
+      localStorage.setItem('patients', JSON.stringify(updatedPatients));
+      return updatedPatients;
+    });
     setSelectedPatient(null);
     setIsEditing(false);
     toast({
@@ -77,9 +84,11 @@ export function usePatients(initialPatients: Patient[], medicalHistories: Medica
   };
 
   const handleDeletePatient = (patientId: string) => {
-    setAllPatients((prevPatients) => 
-      prevPatients.filter(patient => patient.id !== patientId)
-    );
+    setAllPatients((prevPatients) => {
+      const updatedPatients = prevPatients.filter(patient => patient.id !== patientId);
+      localStorage.setItem('patients', JSON.stringify(updatedPatients));
+      return updatedPatients;
+    });
     
     // Also remove all medical history for this patient
     setAllMedicalHistories((prevHistories) => {
