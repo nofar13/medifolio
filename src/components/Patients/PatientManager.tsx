@@ -110,11 +110,11 @@ export const PatientManager = ({ initialPatients, medicalHistories }: PatientMan
         selectedPatientName={selectedPatient?.name}
       />
 
-      {isAddingPatient && (
-        <AddPatientForm
-          onPatientAdded={handleAddPatient}
-        />
-      )}
+      <AddPatientForm
+        onPatientAdded={handleAddPatient}
+        open={isAddingPatient}
+        onOpenChange={toggleAddPatient}
+      />
 
       {isEditing && selectedPatient && (
         <EditPatientForm

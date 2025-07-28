@@ -1,25 +1,23 @@
 
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { PatientFormData, Patient } from "@/types";
 import { toast } from "@/hooks/use-toast";
-import { PlusCircle } from "lucide-react";
 import { patientFormSchema, PatientFormValues } from "./schemas/patientFormSchema";
 import { PatientForm } from "./PatientForm";
 
 interface AddPatientFormProps {
   onPatientAdded?: (patient: Patient) => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-const AddPatientForm = ({ onPatientAdded }: AddPatientFormProps) => {
-  const [open, setOpen] = useState(false);
+const AddPatientForm = ({ onPatientAdded, open, onOpenChange }: AddPatientFormProps) => {
 
   const handleSubmit = (data: PatientFormData) => {
     const newPatient: Patient = {
@@ -39,17 +37,11 @@ const AddPatientForm = ({ onPatientAdded }: AddPatientFormProps) => {
       onPatientAdded(newPatient);
     }
 
-    setOpen(false);
+    onOpenChange(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="ml-2 h-4 w-4" />
-          הוסף מטופל חדש
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto" dir="rtl">
         <PatientForm 
           onSubmit={handleSubmit}

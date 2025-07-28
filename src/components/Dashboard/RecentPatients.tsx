@@ -13,6 +13,7 @@ import { toast } from "@/hooks/use-toast";
 const RecentPatients = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [localPatients, setLocalPatients] = useState(patients);
+  const [isAddingPatient, setIsAddingPatient] = useState(false);
   
   const filteredPatients = localPatients.filter(patient => 
     patient.name.includes(searchTerm) || 
@@ -22,6 +23,7 @@ const RecentPatients = () => {
 
   const handleAddPatient = (newPatient: Patient) => {
     setLocalPatients((prevPatients) => [newPatient, ...prevPatients]);
+    setIsAddingPatient(false);
     toast({
       title: "מטופל חדש נוסף בהצלחה",
       description: `מטופל ${newPatient.name} נוסף למערכת`,
@@ -92,7 +94,15 @@ const RecentPatients = () => {
             <ChevronLeft className="ml-1 h-3 w-3" />
           </Link>
         </Button>
-        <AddPatientForm onPatientAdded={handleAddPatient} />
+        <Button onClick={() => setIsAddingPatient(true)}>
+          <UserPlus className="ml-2 h-4 w-4" />
+          הוסף מטופל חדש
+        </Button>
+        <AddPatientForm 
+          onPatientAdded={handleAddPatient}
+          open={isAddingPatient}
+          onOpenChange={setIsAddingPatient}
+        />
       </CardFooter>
     </Card>
   );
