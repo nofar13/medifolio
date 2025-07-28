@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, Calendar, BarChart, Settings, 
-  Menu, ChevronRight, LogOut, Eye 
+  Menu, ChevronRight, Eye 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -113,17 +113,6 @@ export function SidebarNav({ isOpen, onToggle }: SidebarNavProps) {
         </ul>
       </div>
 
-      <div className="absolute bottom-0 w-full p-4 border-t border-gray-100">
-        <button 
-          className={cn(
-            "flex items-center py-2.5 px-4 rounded-md text-red-500 hover:bg-red-50 transition-all duration-200 w-full",
-            !isOpen && "justify-center"
-          )}
-        >
-          <LogOut className={cn("h-5 w-5", isOpen && "ml-2")} />
-          {isOpen && <span className="font-medium">התנתק</span>}
-        </button>
-      </div>
     </div>
   );
 }
