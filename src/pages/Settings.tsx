@@ -107,10 +107,10 @@ const Settings = () => {
                   
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-2">שירותים:</h3>
-                    <p className="text-gray-600">• בדיקות ראייה מקיפות</p>
-                    <p className="text-gray-600">• התאמת משקפיים</p>
-                    <p className="text-gray-600">• טיפול בפזילות</p>
-                    <p className="text-gray-600">• בדיקות עיניים לילדים</p>
+                    <p className="text-gray-600">בדיקות ראייה מקיפות</p>
+                    <p className="text-gray-600">התאמת משקפיים</p>
+                    <p className="text-gray-600">טיפול בפזילות</p>
+                    <p className="text-gray-600">בדיקות עיניים לילדים</p>
                   </div>
                 </div>
                 
@@ -123,9 +123,9 @@ const Settings = () => {
                   
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-2">ציוד מתקדם:</h3>
-                    <p className="text-gray-600">• אוטו-רפרקטומטר</p>
-                    <p className="text-gray-600">• מכשיר למדידת לחץ עין</p>
-                    <p className="text-gray-600">• מערכת בדיקת שדה ראייה</p>
+                    <p className="text-gray-600">אוטו-רפרקטומטר</p>
+                    <p className="text-gray-600">מכשיר למדידת לחץ עין</p>
+                    <p className="text-gray-600">מערכת בדיקת שדה ראייה</p>
                   </div>
                 </div>
               </div>
