@@ -15,7 +15,9 @@ const Settings = () => {
 
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("ההגדרות נשמרו בהצלחה");
+    toast.success("ההגדרות נשמרו בהצלחה", {
+      duration: 2000
+    });
   };
 
   return (
