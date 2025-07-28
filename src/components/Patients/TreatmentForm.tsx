@@ -104,6 +104,7 @@ export const TreatmentForm = ({ patient, onTreatmentSaved, isReturningPatient = 
     toast({
       title: "טיפול נרשם בהצלחה",
       description: "פרטי הטיפול נשמרו בהיסטוריית המטופל",
+      duration: 2000
     });
     
     form.reset();

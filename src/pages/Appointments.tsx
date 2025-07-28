@@ -59,6 +59,7 @@ const Appointments = () => {
       description: appointmentToDelete 
         ? `פגישה עם ${appointmentToDelete.patientName} בוטלה` 
         : "הפגישה בוטלה",
+      duration: 2000
     });
   };
   

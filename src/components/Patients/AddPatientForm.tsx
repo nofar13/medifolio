@@ -33,6 +33,7 @@ const AddPatientForm = ({ onPatientAdded, open, onOpenChange }: AddPatientFormPr
     toast({
       title: "מטופל חדש נוסף בהצלחה",
       description: `המטופל ${data.name} נוסף למערכת`,
+      duration: 2000
     });
 
     if (onPatientAdded) {

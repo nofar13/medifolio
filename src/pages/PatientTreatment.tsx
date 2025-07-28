@@ -35,6 +35,7 @@ const PatientTreatment = () => {
           title: "שגיאה",
           description: "המטופל לא נמצא",
           variant: "destructive",
+          duration: 2000
         });
         navigate("/patients");
       }

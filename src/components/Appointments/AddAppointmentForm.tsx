@@ -30,6 +30,10 @@ interface AddAppointmentFormProps {
 
 const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => {
   const [open, setOpen] = useState(false);
+  
+  // Load patients from localStorage
+  const savedPatients = localStorage.getItem('patients');
+  const currentPatients = savedPatients ? JSON.parse(savedPatients) : patients;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,13 +43,14 @@ const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => 
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    const patient = patients.find(p => p.id === data.patientId);
+    const patient = currentPatients.find(p => p.id === data.patientId);
     
     if (!patient) {
       toast({
         title: "שגיאה",
         description: "לא נמצא מטופל מתאים",
         variant: "destructive",
+        duration: 2000
       });
       return;
     }
@@ -67,6 +72,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => 
     toast({
       title: "פגישה חדשה נוספה בהצלחה",
       description: `פגישה למטופל ${patient.name} נקבעה לתאריך ${format(data.date, "dd/MM/yyyy")} בשעה ${data.time}`,
+      duration: 2000
     });
 
     if (onAppointmentAdded) {
@@ -92,7 +98,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }: AddAppointmentFormProps) => 
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <PatientSelector form={form} patients={patients} />
+            <PatientSelector form={form} patients={currentPatients} />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <DateSelector form={form} />

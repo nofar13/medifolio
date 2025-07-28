@@ -70,6 +70,7 @@ const CurrentTreatment = () => {
         title: "שגיאה",
         description: "לא נמצא מטופל",
         variant: "destructive",
+        duration: 2000
       });
       return;
     }
@@ -101,6 +102,7 @@ const CurrentTreatment = () => {
     toast({
       title: "נשמר בהצלחה",
       description: "נתוני הטיפול נשמרו בהצלחה ומוצגים בהיסטוריית המטופל",
+      duration: 2000
     });
     
     // Navigate back to patients with the history view opened

@@ -12,7 +12,10 @@ import { toast } from "@/hooks/use-toast";
 
 const RecentPatients = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [localPatients, setLocalPatients] = useState(patients);
+  const [localPatients, setLocalPatients] = useState<Patient[]>(() => {
+    const savedPatients = localStorage.getItem('patients');
+    return savedPatients ? JSON.parse(savedPatients) : patients;
+  });
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   
   const filteredPatients = localPatients.filter(patient => 
@@ -22,11 +25,16 @@ const RecentPatients = () => {
   );
 
   const handleAddPatient = (newPatient: Patient) => {
-    setLocalPatients((prevPatients) => [newPatient, ...prevPatients]);
+    setLocalPatients((prevPatients) => {
+      const updatedPatients = [newPatient, ...prevPatients];
+      localStorage.setItem('patients', JSON.stringify(updatedPatients));
+      return updatedPatients;
+    });
     setIsAddingPatient(false);
     toast({
       title: "מטופל חדש נוסף בהצלחה",
       description: `מטופל ${newPatient.name} נוסף למערכת`,
+      duration: 2000
     });
   };
 

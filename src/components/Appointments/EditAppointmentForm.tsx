@@ -34,6 +34,9 @@ const EditAppointmentForm = ({
   onOpenChange, 
   onAppointmentUpdated 
 }: EditAppointmentFormProps) => {
+  // Load patients from localStorage
+  const savedPatients = localStorage.getItem('patients');
+  const currentPatients = savedPatients ? JSON.parse(savedPatients) : patients;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,6 +62,7 @@ const EditAppointmentForm = ({
     toast({
       title: "הפגישה עודכנה בהצלחה",
       description: `פגישה עם ${appointment.patientName} ב-${format(values.date, "dd/MM/yyyy")} בשעה ${values.time}`,
+      duration: 2000
     });
 
     if (onAppointmentUpdated) {
@@ -78,7 +82,7 @@ const EditAppointmentForm = ({
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <PatientSelector form={form} patients={patients} />
+            <PatientSelector form={form} patients={currentPatients} />
             <DateSelector form={form} />
             <TimeSelector form={form} timeSlots={timeSlots} />
             <NotesField form={form} />

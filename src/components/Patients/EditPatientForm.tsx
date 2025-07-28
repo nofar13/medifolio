@@ -31,6 +31,7 @@ const EditPatientForm = ({ patient, onPatientUpdated, open = false, onOpenChange
     toast({
       title: "פרטי המטופל עודכנו בהצלחה",
       description: `פרטי המטופל ${data.name} עודכנו במערכת`,
+      duration: 2000
     });
 
     if (onPatientUpdated) {
